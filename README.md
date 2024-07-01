@@ -13,7 +13,7 @@
 API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요합니다.
 
 <details>
-  <summary>API Spec</summary>
+  <summary><span style="font-size: 1.5em;">API Spec</span></summary>
 
 ### 유저 토큰 발급 API
 
@@ -46,7 +46,8 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
 - 결제 요청
 </details>
 
-## 엔드포인트
+<details>
+  <summary><span style="font-size: 1.5em;">엔드포인트</span></summary>
 
 ### 유저 토큰 발급 API
 
@@ -701,19 +702,18 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
   }
   ```
 
-## 시퀀스 다이어그램
+  </details>
 
 <details>
-  <summary>토글 제목 (여기를 클릭하세요)</summary>
+  <summary><span style="font-size: 1.5em;">시퀀스 다이어그램</span></summary>
   
-  여기에 숨길 내용을 작성하세요. 이 내용은 토글을 클릭하면 보이게 됩니다.
+  - 로그인 시나리오
+  ![로그인_시나리오](./src/asset/로그인_시나리오.png)
   
-  - 리스트 항목 1
-  - 리스트 항목 2
-  - 리스트 항목 3
-  
-  ```python
-  # 코드 블록 예시
-  print("Hello, World!")
+  - 충전 시나리오
+  ![충전_시나리오](./src/asset/충전_시나리오.png)
+
+- 콘서트 예약 시나리오
+  ![콘서트_예약_시나리오](./src/asset/콘서트_예약_시나리오.png)
+
 </details>
-```
