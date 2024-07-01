@@ -1,73 +1,719 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# API 명세서
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 개요
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+이 API는 콘서트 예약 서비스의 RESTful API입니다.
 
-## Description
+## 기본 URL
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+`https://api.example.com/v1`
 
-## Installation
+## 인증
 
-```bash
-$ npm install
+API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요합니다.
+
+<details>
+  <summary>API Spec</summary>
+
+### 유저 토큰 발급 API
+
+- 로그인
+- 로그아웃
+- 유저 조회
+- 유저 전체 조회
+- 토큰 발급
+
+### 예약 가능 날짜 / 좌석 API
+
+- 콘서트 조회
+- 콘서트 등록
+- 콘서트 삭제
+- 예약 가능 날짜 조회
+- 예약 가능 날짜 별 좌석 조회
+
+### 좌석 예약 요청 API
+
+- 예약 가능 날짜 별 좌석 예약
+- 좌석 예약 취소 요청
+
+### 잔액 충전 / 조회 API
+
+- 잔액 조회
+- 잔액 충전
+
+### 결제 API
+
+- 결제 요청
+</details>
+
+## 엔드포인트
+
+### 유저 토큰 발급 API
+
+#### 로그인
+
+##### EndPoint
+
+- **URL**: `/login`
+- **Method**: `POST`
+- **Description**: 로그인 기능
+
+##### Request
+
+- **Headers**:
+  - `Authorization`: `Bearer {token}`
+  - `Content-Type`: `application/json`
+- **Body**:
+  ```json
+  {
+    "userId": "string",
+    "password": "string"
+  }
+  ```
+
+##### Response
+
+- **Success(201)**:
+  ```json
+  {
+    "token": "jwt토큰"
+  }
+  ```
+- **Error(400)**:
+  ```json
+  {
+    "error": "400",
+    "message": "Invalid input data"
+  }
+  ```
+
+##### Error
+
+- 400 : 잘못된 요청
+- 401 : 인증 실패
+- 403 : 접근 권한 없음
+- 404 : 리소스 없음
+- 500 : 서버 오류
+
+#### 로그아웃
+
+##### EndPoint
+
+- **URL**: `/logout`
+- **Method**: `POST`
+- **Description**: 로그아웃 기능
+
+##### Request
+
+- **Headers**:
+  - `Authorization`: `Bearer {token}`
+  - `Content-Type`: `application/json`
+- **Body**:
+  ```json
+  {
+    "userId": "string"
+  }
+  ```
+
+##### Response
+
+- **Success(201)**:
+  ```json
+  {
+    "token": null
+  }
+  ```
+
+#### 유저 조회
+
+##### EndPoint
+
+- **URL**: `/getUserInfo`
+- **Method**: `POST`
+- **Description**: 특정 유저 조회
+
+##### Request
+
+- **Headers**:
+  - `Authorization`: `Bearer {token}`
+  - `Content-Type`: `application/json`
+- **Body**:
+  ```json
+  {
+    "userId": "string"
+  }
+  ```
+
+##### Response
+
+- **Success(201)**:
+  ```json
+  {
+    "userId": "string",
+    "userName": "string",
+    "userEmail": "string",
+    "token": "string"
+  }
+  ```
+- **Error(404)**:
+  ```json
+  {
+    "error": 404,
+    "message": "Not found"
+  }
+  ```
+
+#### 유저 전체 조회
+
+##### EndPoint
+
+- **URL**: `/getUserInfoAll`
+- **Method**: `POST`
+- **Description**: 전체 유저 조회
+
+##### Request
+
+- **Headers**:
+  - `Authorization`: `Bearer {token}`
+  - `Content-Type`: `application/json`
+- **Body**:
+  ```json
+  {
+    "userId": "string"
+  }
+  ```
+
+##### Response
+
+- **Success(201)**:
+  ```json
+  [
+    {
+      "userId": "string",
+      "userName": "string",
+      "userEmail": "string",
+      "token": "string"
+    },
+    {
+      "userId": "string",
+      "userName": "string",
+      "userEmail": "string",
+      "token": "string"
+    },
+    {
+      "userId": "string",
+      "userName": "string",
+      "userEmail": "string",
+      "token": "string"
+    }
+  ]
+  ```
+- **Error(404)**:
+  ```json
+  {
+    "error": 404,
+    "message": "Not found"
+  }
+  ```
+
+#### 유저 토큰 발급
+
+##### EndPoint
+
+- **URL**: `/setToken`
+- **Method**: `POST`
+- **Description**: 토큰 발급
+
+##### Request
+
+- **Headers**:
+  - `Authorization`: `Bearer {token}`
+  - `Content-Type`: `application/json`
+- **Body**:
+  ```json
+  {
+    "userId": "string"
+  }
+  ```
+
+##### Response
+
+- **Success(201)**:
+  ```json
+  {
+    "userId": "string",
+    "token": "string"
+  }
+  ```
+
+### 예약 가능 날짜 / 좌석 API
+
+#### 콘서트 조회
+
+##### EndPoint
+
+- **URL**: `/getConcertAll`
+- **Method**: `POST`
+- **Description**: 전체 콘서트를 조회
+
+##### Request
+
+- **Headers**:
+  - `Authorization`: `Bearer {token}`
+  - `Content-Type`: `application/json`
+- **Body**:
+  ```json
+  {}
+  ```
+
+##### Response
+
+- **Success(201)**:
+
+  ```json
+  [
+    {
+      "concertName" : "string",
+      "concertOpenedDate" : "dateTime",
+      "concertClosedDate" : "dateTime",
+      "concertMaxCapacity" : number,
+      "concertApplyCapacity" : number
+    },
+    {
+      "concertName" : "string",
+      "concertOpenedDate" : "dateTime",
+      "concertClosedDate" : "dateTime",
+      "concertMaxCapacity" : number,
+      "concertApplyCapacity" : number
+    }
+  ]
+
+  ```
+
+- **Error(404)**:
+  ```json
+  {
+    "error": "404",
+    "message": "Not Found"
+  }
+  ```
+
+#### 콘서트 등록
+
+##### EndPoint
+
+- **URL**: `/setConcert`
+- **Method**: `POST`
+- **Description**: 콘서트 등록
+
+##### Request
+
+- **Headers**:
+  - `Authorization`: `Bearer {token}`
+  - `Content-Type`: `application/json`
+- **Body**:
+  ```json
+  {
+    "concertName" : "string",
+    "concertOpenedDate" : "dateTime",
+    "concertClosedDate" : "dateTime",
+    "concertMaxCapacity" : number
+  }
+  ```
+
+##### Response
+
+- **Success(201)**:
+
+  ```json
+  {
+    "concertId": number,
+    "concertName" : "string",
+    "concertOpenedDate" : "dateTime",
+    "concertClosedDate" : "dateTime",
+    "concertMaxCapacity" : number,
+    "concertApplyCapacity" : number
+  }
+  ```
+
+#### 콘서트 삭제
+
+##### EndPoint
+
+- **URL**: `/delConcert`
+- **Method**: `POST`
+- **Description**: 콘서트 삭제
+
+##### Request
+
+- **Headers**:
+
+  - `Authorization`: `Bearer {token}`
+  - `Content-Type`: `application/json`
+
+- **Body**:
+  ```json
+  {
+    "concertId" : number
+  }
+  ```
+
+##### Response
+
+- **Success(201)**:
+
+  ```json
+  {
+    "result" : boolean
+  }
+  ```
+
+- **Error(404)**:
+  ```json
+  {
+    "error": "404",
+    "message": "Not Found"
+  }
+  ```
+
+#### 예약 가능 날짜 조회
+
+##### EndPoint
+
+- **URL**: `/getConcertDate`
+- **Method**: `POST`
+- **Description**: 예약 가능 날짜 조회
+
+##### Request
+
+- **Headers**:
+
+  - `Authorization`: `Bearer {token}`
+  - `Content-Type`: `application/json`
+
+- **Body**:
+  ```json
+  {
+    "concertId" : number
+  }
+  ```
+
+##### Response
+
+- **Success(201)**:
+
+  ```json
+  [
+    {
+      "concertOptionId" : number,
+      "concertOpenedDate" : dateTime
+    },
+    {
+      "concertOptionId" : number,
+      "concertOpenedDate" : dateTime
+    },
+    {
+      "concertOptionId" : number,
+      "concertOpenedDate" : dateTime
+    },
+    {
+      "concertOptionId" : number,
+      "concertOpenedDate" : dateTime
+    }
+  ]
+  ```
+
+- **Error(404)**:
+  ```json
+  {
+    "error": "404",
+    "message": "Not Found"
+  }
+  ```
+
+#### 예약 가능 날짜 별 좌석 조회
+
+##### EndPoint
+
+- **URL**: `/getConcertDateToCapacity`
+- **Method**: `POST`
+- **Description**: 예약 가능 날짜 별 좌석 조회
+
+##### Request
+
+- **Headers**:
+
+  - `Authorization`: `Bearer {token}`
+  - `Content-Type`: `application/json`
+
+- **Body**:
+  ```json
+  {
+    "concertOptionId" : number,
+    "concertOpenedDate" : dateTime
+  }
+  ```
+
+##### Response
+
+- **Success(201)**:
+
+  ```json
+  [
+    {
+      "concertOptionId" : number,
+      "concertSeatNumber" : [number, number, number]
+    },
+    {
+      "concertOptionId" : number,
+      "concertSeatNumber" : [number, number, number]
+    },
+    {
+      "concertOptionId" : number,
+      "concertSeatNumber" : [number, number, number]
+    },
+    {
+      "concertOptionId" : number,
+      "concertSeatNumber" : [number, number, number]
+    }
+  ]
+  ```
+
+- **Error(404)**:
+  ```json
+  {
+    "error": "404",
+    "message": "Not Found"
+  }
+  ```
+
+### 좌석 예약 요청 API
+
+#### 예약 가능 날짜 별 좌석 예약
+
+##### EndPoint
+
+- **URL**: `/setConcertDateToCapacity`
+- **Method**: `POST`
+- **Description**: 예약 가능 날짜 별 좌석 예약
+
+##### Request
+
+- **Headers**:
+
+  - `Authorization`: `Bearer {token}`
+  - `Content-Type`: `application/json`
+
+- **Body**:
+  ```json
+  {
+    "concertOptionId" : number,
+    "concertOpenedDate" : dateTime,
+    "concertSeatNumber" : number
+  }
+  ```
+
+##### Response
+
+- **Success(201)**:
+
+  ```json
+  [
+    {
+      "concertOptionId" : number,
+      "concertSeatNumber" : [number, number, number]
+    },
+    {
+      "concertOptionId" : number,
+      "concertSeatNumber" : [number, number, number]
+    },
+    {
+      "concertOptionId" : number,
+      "concertSeatNumber" : [number, number, number]
+    },
+    {
+      "concertOptionId" : number,
+      "concertSeatNumber" : [number, number, number]
+    }
+  ]
+  ```
+
+- **Error(404)**:
+  ```json
+  {
+    "error": "404",
+    "message": "Not Found"
+  }
+  ```
+
+#### 좌석 예약 취소 요청
+
+##### EndPoint
+
+- **URL**: `/delConcertDateToCapacity`
+- **Method**: `POST`
+- **Description**: 좌석 예약 취소 요청
+
+##### Request
+
+- **Headers**:
+
+  - `Authorization`: `Bearer {token}`
+  - `Content-Type`: `application/json`
+
+- **Body**:
+  ```json
+  {
+    "concertOptionId" : number,
+    "concertOpenedDate" : dateTime,
+    "concertSeatNumber" : number
+  }
+  ```
+
+##### Response
+
+- **Success(201)**:
+
+  ```json
+  {
+    "result": boolean
+  }
+  ```
+
+- **Error(404)**:
+  ```json
+  {
+    "error": "404",
+    "message": "Not Found"
+  }
+  ```
+
+### 잔액 충전 / 조회 API
+
+#### 잔액 조회
+
+##### EndPoint
+
+- **URL**: `/getAmount`
+- **Method**: `POST`
+- **Description**: 잔액 조회
+
+##### Request
+
+- **Headers**:
+
+  - `Authorization`: `Bearer {token}`
+  - `Content-Type`: `application/json`
+
+- **Body**:
+  ```json
+  {
+    "userId": "string"
+  }
+  ```
+
+##### Response
+
+- **Success(201)**:
+
+  ```json
+  {
+    "userId": "string",
+    "userAmount": number
+  }
+  ```
+
+#### 잔액 충전
+
+##### EndPoint
+
+- **URL**: `/setAmount`
+- **Method**: `POST`
+- **Description**: 잔액 충전
+
+##### Request
+
+- **Headers**:
+
+  - `Authorization`: `Bearer {token}`
+  - `Content-Type`: `application/json`
+
+- **Body**:
+  ```json
+  {
+    "userId" : "string",
+    "chargeAmount" : number
+  }
+  ```
+
+##### Response
+
+- **Success(201)**:
+
+  ```json
+  {
+    "userId": "string",
+    "userAmount": number
+  }
+  ```
+
+### 결제 API
+
+#### 결제 요청
+
+##### EndPoint
+
+- **URL**: `/setPayment`
+- **Method**: `POST`
+- **Description**: 결제 요청
+
+##### Request
+
+- **Headers**:
+
+  - `Authorization`: `Bearer {token}`
+  - `Content-Type`: `application/json`
+
+- **Body**:
+  ```json
+  {
+    "userId": "string"
+  }
+  ```
+
+##### Response
+
+- **Success(201)**:
+
+  ```json
+  {
+    "userId": "string",
+    "userAmount": number
+  }
+  ```
+
+- **Error(500)**:
+
+  ```json
+  {
+    "error": "500",
+    "message": "금액이 부족합니다".
+  }
+  ```
+
+## 시퀀스 다이어그램
+
+<details>
+  <summary>토글 제목 (여기를 클릭하세요)</summary>
+  
+  여기에 숨길 내용을 작성하세요. 이 내용은 토글을 클릭하면 보이게 됩니다.
+  
+  - 리스트 항목 1
+  - 리스트 항목 2
+  - 리스트 항목 3
+  
+  ```python
+  # 코드 블록 예시
+  print("Hello, World!")
+</details>
 ```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
