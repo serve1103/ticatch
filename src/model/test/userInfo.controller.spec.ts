@@ -29,12 +29,21 @@ describe('UserInfoController', () => {
       expect(result).toEqual({ userId, userName });
     });
 
-    it('로그인 실패', async () => {
+    it('로그인 실패 - 비밀번호 미 기재', async () => {
       const userId = 'test1';
       const userPw = '';
 
       await expect(controller.login({ userId, userPw })).rejects.toThrow(
         '비밀번호를 입력해주세요.',
+      );
+    });
+
+    it('로그인 실패 - 유효하지 않은 아이다', async () => {
+      const userId = 'test2';
+      const userPw = '1';
+
+      await expect(controller.login({ userId, userPw })).rejects.toThrow(
+        '유효하지 않은 아이디입니다.',
       );
     });
   });
