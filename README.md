@@ -180,9 +180,7 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
   - `Content-Type`: `application/json`
 - **Body**:
   ```json
-  {
-    "userId": "string"
-  }
+  {}
   ```
 
 ##### Response
@@ -254,7 +252,7 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
 
 ##### EndPoint
 
-- **URL**: `/getConcertAll`
+- **URL**: `/getConcert`
 - **Method**: `POST`
 - **Description**: 전체 콘서트를 조회
 
@@ -726,5 +724,12 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
   <summary><span style="font-size: 1.5em;">마일스톤 정리</span></summary>
   
   ![프로젝트_마일스톤](./src/asset/프로젝트_마일스톤.png)
+
+</details>
+
+<details>
+  <summary><span style="font-size: 1.5em;">ERD</span></summary>
+  
+  ![ERD](./src/asset/erd_구조.png)
 
 </details>
