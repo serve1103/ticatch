@@ -721,3 +721,10 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
   ![콘서트_예약_시나리오](./src/asset/콘서트_예약_시나리오.png)
 
 </details>
+
+<details>
+  <summary><span style="font-size: 1.5em;">마일스톤 정리</span></summary>
+  
+  ![프로젝트_마일스톤](./src/asset/프로젝트_마일스톤.png)
+
+</details>
