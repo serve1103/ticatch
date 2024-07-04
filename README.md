@@ -397,7 +397,7 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
 - **Body**:
   ```json
   {
-    "concertId" : number
+    "concertName": "string"
   }
   ```
 
@@ -408,19 +408,19 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
   ```json
   [
     {
-      "concertOptionId" : number,
+      "concertName" : "string",
       "concertOpenedDate" : dateTime
     },
     {
-      "concertOptionId" : number,
+      "concertName" : "string",
       "concertOpenedDate" : dateTime
     },
     {
-      "concertOptionId" : number,
+      "concertName" : "string",
       "concertOpenedDate" : dateTime
     },
     {
-      "concertOptionId" : number,
+      "concertName" : "string",
       "concertOpenedDate" : dateTime
     }
   ]
@@ -452,7 +452,7 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
 - **Body**:
   ```json
   {
-    "concertOptionId" : number,
+    "concertName" : "string",
     "concertOpenedDate" : dateTime
   }
   ```
@@ -464,20 +464,9 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
   ```json
   [
     {
-      "concertOptionId" : number,
-      "concertSeatNumber" : [number, number, number]
-    },
-    {
-      "concertOptionId" : number,
-      "concertSeatNumber" : [number, number, number]
-    },
-    {
-      "concertOptionId" : number,
-      "concertSeatNumber" : [number, number, number]
-    },
-    {
-      "concertOptionId" : number,
-      "concertSeatNumber" : [number, number, number]
+      "concertName" : "string",
+      "concertOpenedDate" : dateTime,
+      "concertSeatNumber" : [ number, number, number ]
     }
   ]
   ```
@@ -510,7 +499,7 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
 - **Body**:
   ```json
   {
-    "concertOptionId" : number,
+    "concertname" : string,
     "concertOpenedDate" : dateTime,
     "concertSeatNumber" : number
   }
@@ -521,24 +510,9 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
 - **Success(201)**:
 
   ```json
-  [
-    {
-      "concertOptionId" : number,
-      "concertSeatNumber" : [number, number, number]
-    },
-    {
-      "concertOptionId" : number,
-      "concertSeatNumber" : [number, number, number]
-    },
-    {
-      "concertOptionId" : number,
-      "concertSeatNumber" : [number, number, number]
-    },
-    {
-      "concertOptionId" : number,
-      "concertSeatNumber" : [number, number, number]
-    }
-  ]
+  {
+    "result" : boolean
+  }
   ```
 
 - **Error(404)**:
@@ -567,7 +541,7 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
 - **Body**:
   ```json
   {
-    "concertOptionId" : number,
+    "concertName" : string,
     "concertOpenedDate" : dateTime,
     "concertSeatNumber" : number
   }

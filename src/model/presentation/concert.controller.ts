@@ -54,4 +54,40 @@ export class ConcertController {
       concertApplyCapacity,
     };
   }
+
+  @Post('/getConcertDate')
+  async getConcertDate( concertName: string ): Promise<object[]>{
+    if (concertName === null || concertName === undefined) throw new Error('콘서트를 찾을 수 없습니다.');
+    const concertOpenedDate1 = '2024-03-08';
+    const concertOpenedDate2 = '2024-11-03';
+    const concertOpenedDate3 = '2025-01-21';
+    return [
+      { concertName, concertOpenedDate1 },
+      { concertName, concertOpenedDate2 },
+      { concertName, concertOpenedDate3 },
+    ]
+  }
+
+  @Post('/getConcertDateToCapacity')
+  async getConcertDateToCapacity({ concertName, concertOpenedDate }): Promise<object> {
+    if(concertOpenedDate === null || concertOpenedDate === undefined) throw new Error('날짜를 찾을 수 없습니다.')
+    const concertSeatNumbers = [10, 20, 30];
+    return {
+      concertName,
+      concertOpenedDate,
+      concertSeatNumbers,
+    }
+  }
+
+  @Post('/setConcertDateToCapacity')
+  async setConcertDateToCapacity({ concertName, concertOpenedDate, concertSeatNumber }): Promise<boolean> {
+    if (concertSeatNumber === null || concertSeatNumber === undefined) throw new Error('좌석을 선택해 주세요.');
+    return true;
+  }
+
+  @Post('/delConcertDateToCapacity')
+  async delConcertDateToCapacity({ concertName, concertOpenedDate, concertSeatNumber }): Promise<boolean> {
+    if (concertSeatNumber === null || concertSeatNumber === undefined) throw new Error('좌석을 선택해 주세요.');
+    return true;
+  }
 }

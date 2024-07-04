@@ -160,4 +160,83 @@ describe('ConcertController', () => {
       );
     });
   });
+
+  describe('예약 가능 날짜 조회', () => {
+    it('조회 성공', async () => {
+      const concertName = '강수지 팬미팅';
+      const concertOpenedDate1 = '2024-03-08';
+      const concertOpenedDate2 = '2024-11-03';
+      const concertOpenedDate3 = '2025-01-21';
+
+      const result = await controller.getConcertDate(concertName);
+
+      expect(result).toEqual([
+        { concertName, concertOpenedDate1 },
+        { concertName, concertOpenedDate2 },
+        { concertName, concertOpenedDate3 },
+      ]);
+    });
+
+    it('조회 실패', async () => {
+      const concertName = null;
+
+      await expect(controller.getConcertDate(concertName)).rejects.toThrow('콘서트를 찾을 수 없습니다.')
+    });
+  });
+
+  describe('예약 가능 날짜 별 좌석 조회', () => {
+    it('조회 성공', async () => {
+      const concertName = '강수지 팬미팅';
+      const concertOpenedDate = '2024-03-08';
+      const concertSeatNumbers = [ 10, 20, 30 ];
+
+      const result = await controller.getConcertDateToCapacity({ concertName, concertOpenedDate });
+
+      expect(result).toEqual({ concertName, concertOpenedDate, concertSeatNumbers });
+    });
+
+    it('조회 실패 - 날짜를 찾을 수 없습니다.', async () => {
+      const concertName = '강수지 팬미팅';
+      const concertOpenedDate = null;
+      await expect(controller.getConcertDateToCapacity({ concertName, concertOpenedDate })).rejects.toThrow('날짜를 찾을 수 없습니다.')
+    });
+  });
+
+  describe('예약 가능 날짜 별 좌석 예약', () => {
+    it('예약 성공', async () => {
+      const concertName = '강수지 팬미팅';
+      const concertOpenedDate = '2024-03-08';
+      const concertSeatNumber = 10;
+
+      const result = await controller.setConcertDateToCapacity({ concertName, concertOpenedDate, concertSeatNumber });
+
+      expect(result).toEqual(true);
+    });
+
+    it('예약 실패 - 좌석을 찾을 수 없을 때', async () => {
+      const concertName = '강수지 팬미팅';
+      const concertOpenedDate = '2024-03-08';
+      const concertSeatNumber = null;
+      await expect(controller.setConcertDateToCapacity({ concertName, concertOpenedDate, concertSeatNumber })).rejects.toThrow('좌석을 선택해 주세요.');
+    });
+  });
+
+  describe('예약 가능 날짜 별 좌석 예약 취소', () => {
+    it('취소 성공', async () => {
+      const concertName = '강수지 팬미팅';
+      const concertOpenedDate = '2024-03-08';
+      const concertSeatNumber = 10;
+
+      const result = await controller.delConcertDateToCapacity({ concertName, concertOpenedDate, concertSeatNumber });
+
+      expect(result).toEqual(true);
+    });
+
+    it('취소 실패 - 좌석을 찾을 수 없을 때.', async () => {
+      const concertName = '강수지 팬미팅';
+      const concertOpenedDate = '2024-03-08';
+      const concertSeatNumber = null;
+      await expect(controller.delConcertDateToCapacity({ concertName, concertOpenedDate, concertSeatNumber })).rejects.toThrow('좌석을 선택해 주세요.');
+    });
+  });
 });
