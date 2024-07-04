@@ -265,7 +265,9 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
   - `Content-Type`: `application/json`
 - **Body**:
   ```json
-  {}
+  {
+    "concertName": "string"
+  }
   ```
 
 ##### Response
@@ -356,7 +358,8 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
 - **Body**:
   ```json
   {
-    "concertId" : number
+    "concertName": "string",
+    "concertOpenDate": "dateTime"
   }
   ```
 
