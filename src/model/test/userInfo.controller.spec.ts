@@ -20,10 +20,12 @@ describe('UserInfoController', () => {
     it('조회 성공', async () => {
       const userId = 'test1';
       const userName = '테스트';
+      const userEmail = 'test@test.com';
+      const token = '1q2w3e4r';
 
       const result = await controller.getUserInfo(userId);
 
-      expect(result).toEqual({ userId, userName });
+      expect(result).toEqual({ userId, userName, userEmail, token });
     });
 
     it('조회 실패 - 아이디 없음', async () => {

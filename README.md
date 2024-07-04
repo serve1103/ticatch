@@ -21,7 +21,7 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
 - 로그아웃
 - 유저 조회
 - 유저 전체 조회
-- 토큰 발급
+<!-- - 토큰 발급 -->
 
 ### 예약 가능 날짜 / 좌석 API
 
@@ -77,6 +77,7 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
 - **Success(201)**:
   ```json
   {
+    "userId": "string",
     "token": "jwt토큰"
   }
   ```
@@ -217,7 +218,7 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
   }
   ```
 
-#### 유저 토큰 발급
+<!-- #### 유저 토큰 발급
 
 ##### EndPoint
 
@@ -245,7 +246,7 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
     "userId": "string",
     "token": "string"
   }
-  ```
+  ``` -->
 
 ### 예약 가능 날짜 / 좌석 API
 

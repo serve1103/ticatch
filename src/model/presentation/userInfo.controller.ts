@@ -11,10 +11,14 @@ export class UserInfoController {
     if (!userId) throw new Error('유저를 찾을 수 없습니다.');
 
     const userName = '테스트';
+    const userEmail = 'test@test.com';
+    const token = '1q2w3e4r';
 
     return {
       userId,
       userName,
+      userEmail,
+      token,
     };
   }
 
