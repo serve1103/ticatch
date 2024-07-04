@@ -654,7 +654,8 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
 - **Body**:
   ```json
   {
-    "userId": "string"
+    "userId": "string",
+    "usingAmount": number
   }
   ```
 
@@ -664,8 +665,7 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
 
   ```json
   {
-    "userId": "string",
-    "userAmount": number
+    "result": boolean
   }
   ```
 
