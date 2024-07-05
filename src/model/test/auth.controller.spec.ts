@@ -43,9 +43,31 @@ describe('AuthController', () => {
       const userId = 'test1';
       const token = null;
 
-      const result = null;
+      const result = await controller.logout(userId);
 
       expect(result).toEqual(token);
+    });
+  });
+
+  describe('대기열 발급', () => {
+    it('대기열 발급 성공', async () => {
+      const idx = 1;
+      const userId = 'test1';
+      const state = 'WAITING';
+
+      const result = await controller.setUserWaitQueue({ userId });
+
+      expect(result).toEqual({ idx, userId, state });
+    });
+
+    it('대기열 발급 실패 - 중복 발급', async () => {
+      // userId의 state가 WAITING일 경우 추가로 요청하는 경우
+      const userId = 'test1';
+      await controller.setUserWaitQueue({ userId });
+
+      await expect(controller.setUserWaitQueue({ userId })).rejects.toThrow(
+        new Error('이미 대기열이 배정 되어있습니다.'),
+      );
     });
   });
 });

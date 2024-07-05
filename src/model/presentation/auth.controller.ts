@@ -4,6 +4,9 @@ import { Controller, Post } from '@nestjs/common';
 export class AuthController {
   constructor() {}
 
+  private userWaitQueue: { idx: number; userId: string; state: string }[] = [];
+  private currentIdx: number = 1;
+
   @Post('/login')
   async login({ userId, userPw }): Promise<object> {
     const token = '1q2w3e4r';
@@ -22,5 +25,21 @@ export class AuthController {
     if (userId) token = null;
 
     return token;
+  }
+
+  @Post()
+  async setUserWaitQueue({ userId }): Promise<object> {
+    const state = 'WAITING';
+    const validateId = this.userWaitQueue.find(
+      (entry) => entry.userId === userId,
+    );
+
+    if (validateId) throw new Error('이미 대기열이 배정 되어있습니다.');
+
+    const userEntry = { idx: this.currentIdx++, userId, state };
+
+    this.userWaitQueue.push(userEntry);
+
+    return userEntry;
   }
 }
