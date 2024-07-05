@@ -6,7 +6,7 @@
 
 ## 기본 URL
 
-`https://api.example.com/v1`
+<!-- `https://api.example.com/v1` -->
 
 ## 인증
 
