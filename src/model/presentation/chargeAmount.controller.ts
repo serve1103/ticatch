@@ -1,8 +1,11 @@
 import { Controller, Post } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('충전 관리')
 @Controller('chargeAmount')
 export class ChargeAmountController {
   // 금액 충전
+  @ApiOperation({ summary: '금액 충전' })
   @Post('/setChargeAmount')
   async setChargeAmount({ userId, chargeAmount }): Promise<object> {
     const userAmount = 10000;
@@ -18,6 +21,7 @@ export class ChargeAmountController {
   }
 
   // 금액 조회
+  @ApiOperation({})
   @Post('/getChargeAmount')
   async getChargeAmount({ userId }): Promise<object> {
     const userAmount = 10000;
