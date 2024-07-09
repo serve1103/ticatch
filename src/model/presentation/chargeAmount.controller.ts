@@ -21,7 +21,7 @@ export class ChargeAmountController {
   }
 
   // 금액 조회
-  @ApiOperation({})
+  @ApiOperation({ summary: '충전 금액 조회' })
   @Post('/getChargeAmount')
   async getChargeAmount({ userId }): Promise<object> {
     const userAmount = 10000;
@@ -32,6 +32,7 @@ export class ChargeAmountController {
   }
 
   // 금액 조회
+  @ApiOperation({ summary: '충전 금액 사용' })
   @Post('/useChargeAmount')
   async useChargeAmount({ userId, usingAmount }): Promise<object> {
     const userAmount = 10000;

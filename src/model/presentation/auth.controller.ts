@@ -32,6 +32,7 @@ export class AuthController {
   }
 
   @Post()
+  @ApiOperation({ summary: '대기열 추가' })
   async setUserWaitQueue({ userId }): Promise<object> {
     const state = 'WAITING';
     const validateId = this.userWaitQueue.find(

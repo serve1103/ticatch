@@ -1,10 +1,13 @@
 import { Controller, Post } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('유저 관리')
 @Controller('userInfo')
 export class UserInfoController {
   constructor() {}
 
   // 특정 유저 정보 조회
+  @ApiOperation({ summary: '유저 조회' })
   @Post('/getUserInfo')
   async getUserInfo(userId: string): Promise<object> {
     // 유저 아이디가 없을 때
@@ -22,7 +25,8 @@ export class UserInfoController {
     };
   }
 
-  // 특정 유저 정보 조회
+  // 유저 등록
+  @ApiOperation({ summary: '유저 등록' })
   @Post('/setUserInfo')
   async setUserInfo(
     userId: string,
@@ -43,7 +47,8 @@ export class UserInfoController {
     };
   }
 
-  // 특정 유저 정보 조회
+  // 유저 정보 수정
+  @ApiOperation({ summary: '유저 정보 수정' })
   @Post('/updateUserInfo')
   async updateUserInfo(userId: string, userName: string): Promise<object> {
     // 유저 아이디가 없을 때
@@ -57,6 +62,8 @@ export class UserInfoController {
     };
   }
 
+  // 유저 삭제
+  @ApiOperation({ summary: '유저 삭제' })
   @Post('/delUserInfo')
   async delUserInfo(userId: string): Promise<boolean> {
     if (!userId) throw new Error('유저를 찾을 수 없습니다.');
