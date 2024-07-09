@@ -1,7 +1,10 @@
 import { Controller, Post } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('콘서트 관리')
 @Controller('concert')
 export class ConcertController {
+  @ApiOperation({ summary: '콘서트 조회' })
   @Post('/getConcert')
   async getConcert(concertName: string): Promise<object[]> {
     // 콘서트 명을 찾지 못했을 때
@@ -26,8 +29,8 @@ export class ConcertController {
       },
     ];
   }
-
-  @Post()
+  @ApiOperation({ summary: '콘서트 등록' })
+  @Post('/setConcert')
   async setConcert({
     concertName,
     concertOpenedDate,
@@ -55,9 +58,11 @@ export class ConcertController {
     };
   }
 
+  @ApiOperation({ summary: '콘서트 일자 조회' })
   @Post('/getConcertDate')
-  async getConcertDate( concertName: string ): Promise<object[]>{
-    if (concertName === null || concertName === undefined) throw new Error('콘서트를 찾을 수 없습니다.');
+  async getConcertDate(concertName: string): Promise<object[]> {
+    if (concertName === null || concertName === undefined)
+      throw new Error('콘서트를 찾을 수 없습니다.');
     const concertOpenedDate1 = '2024-03-08';
     const concertOpenedDate2 = '2024-11-03';
     const concertOpenedDate3 = '2025-01-21';
@@ -65,29 +70,45 @@ export class ConcertController {
       { concertName, concertOpenedDate1 },
       { concertName, concertOpenedDate2 },
       { concertName, concertOpenedDate3 },
-    ]
+    ];
   }
 
+  @ApiOperation({ summary: '콘서트 일자별 자리 조회' })
   @Post('/getConcertDateToCapacity')
-  async getConcertDateToCapacity({ concertName, concertOpenedDate }): Promise<object> {
-    if(concertOpenedDate === null || concertOpenedDate === undefined) throw new Error('날짜를 찾을 수 없습니다.')
+  async getConcertDateToCapacity({
+    concertName,
+    concertOpenedDate,
+  }): Promise<object> {
+    if (concertOpenedDate === null || concertOpenedDate === undefined)
+      throw new Error('날짜를 찾을 수 없습니다.');
     const concertSeatNumbers = [10, 20, 30];
     return {
       concertName,
       concertOpenedDate,
       concertSeatNumbers,
-    }
+    };
   }
-
+  @ApiOperation({ summary: '콘서트 일자별 자리 등록' })
   @Post('/setConcertDateToCapacity')
-  async setConcertDateToCapacity({ concertName, concertOpenedDate, concertSeatNumber }): Promise<boolean> {
-    if (concertSeatNumber === null || concertSeatNumber === undefined) throw new Error('좌석을 선택해 주세요.');
+  async setConcertDateToCapacity({
+    concertName,
+    concertOpenedDate,
+    concertSeatNumber,
+  }): Promise<boolean> {
+    if (concertSeatNumber === null || concertSeatNumber === undefined)
+      throw new Error('좌석을 선택해 주세요.');
     return true;
   }
 
+  @ApiOperation({ summary: '콘서트 일자별 자리 삭제' })
   @Post('/delConcertDateToCapacity')
-  async delConcertDateToCapacity({ concertName, concertOpenedDate, concertSeatNumber }): Promise<boolean> {
-    if (concertSeatNumber === null || concertSeatNumber === undefined) throw new Error('좌석을 선택해 주세요.');
+  async delConcertDateToCapacity({
+    concertName,
+    concertOpenedDate,
+    concertSeatNumber,
+  }): Promise<boolean> {
+    if (concertSeatNumber === null || concertSeatNumber === undefined)
+      throw new Error('좌석을 선택해 주세요.');
     return true;
   }
 }

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConcertModule } from './model/concert.module';
 import { AuthModule } from './model/auth.module';
-import { ChargeAmountModule } from './model/chargeAmount.module';
+import { AmountModule } from './model/amount.module';
 import { PaymentModule } from './model/payment.module';
 import { UserInfoModule } from './model/userInfo.module';
 
@@ -9,7 +9,7 @@ import { UserInfoModule } from './model/userInfo.module';
   imports: [
     ConcertModule,
     AuthModule,
-    ChargeAmountModule,
+    AmountModule,
     PaymentModule,
     UserInfoModule,
   ],
