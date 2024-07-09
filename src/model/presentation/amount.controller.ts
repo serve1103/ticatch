@@ -2,8 +2,8 @@ import { Controller, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('충전 관리')
-@Controller('chargeAmount')
-export class ChargeAmountController {
+@Controller('amount')
+export class AmountController {
   // 금액 충전
   @ApiOperation({ summary: '금액 충전' })
   @Post('/setChargeAmount')
