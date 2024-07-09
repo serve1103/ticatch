@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConcertController } from './presentation/concert.controller';
-import { ConcertService } from './domain/concert.service';
+import { ConcertService } from './domain/services/concert.service';
 
 @Module({
   controllers: [ConcertController],

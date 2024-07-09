@@ -10,7 +10,6 @@ export function setSwagger(app: INestApplication): void {
     .setTitle('콘서트 예약 서비스 ticatch')
     .setDescription('티켓팅 놓치지 마세요.')
     .setVersion('1.0')
-    .addTag('ticatch') // 태그 추가
     .build();
 
   const document = SwaggerModule.createDocument(app, options); // Swagger 문서 생성
