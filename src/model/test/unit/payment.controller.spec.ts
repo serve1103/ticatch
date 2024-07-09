@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PaymentController } from '../presentation/payment.controller';
-
+import { PaymentController } from '../../presentation/payment.controller';
 
 describe('PaymentController', () => {
   let controller: PaymentController;
@@ -19,11 +18,11 @@ describe('PaymentController', () => {
 
   describe('결제 요청 api', () => {
     it('요청 성공', async () => {
-      const userId = 'test1'
-      const usingAmount = 3000
+      const userId = 'test1';
+      const usingAmount = 3000;
       const result = true;
 
-      expect(result).toEqual(true)
-    })
-  })
+      expect(result).toEqual(true);
+    });
+  });
 });

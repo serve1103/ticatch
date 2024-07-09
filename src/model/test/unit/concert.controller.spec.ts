@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConcertController } from '../presentation/concert.controller';
+import { ConcertController } from '../../presentation/concert.controller';
 
 describe('ConcertController', () => {
   let controller: ConcertController;
@@ -180,7 +180,9 @@ describe('ConcertController', () => {
     it('조회 실패', async () => {
       const concertName = null;
 
-      await expect(controller.getConcertDate(concertName)).rejects.toThrow('콘서트를 찾을 수 없습니다.')
+      await expect(controller.getConcertDate(concertName)).rejects.toThrow(
+        '콘서트를 찾을 수 없습니다.',
+      );
     });
   });
 
@@ -188,17 +190,26 @@ describe('ConcertController', () => {
     it('조회 성공', async () => {
       const concertName = '강수지 팬미팅';
       const concertOpenedDate = '2024-03-08';
-      const concertSeatNumbers = [ 10, 20, 30 ];
+      const concertSeatNumbers = [10, 20, 30];
 
-      const result = await controller.getConcertDateToCapacity({ concertName, concertOpenedDate });
+      const result = await controller.getConcertDateToCapacity({
+        concertName,
+        concertOpenedDate,
+      });
 
-      expect(result).toEqual({ concertName, concertOpenedDate, concertSeatNumbers });
+      expect(result).toEqual({
+        concertName,
+        concertOpenedDate,
+        concertSeatNumbers,
+      });
     });
 
     it('조회 실패 - 날짜를 찾을 수 없습니다.', async () => {
       const concertName = '강수지 팬미팅';
       const concertOpenedDate = null;
-      await expect(controller.getConcertDateToCapacity({ concertName, concertOpenedDate })).rejects.toThrow('날짜를 찾을 수 없습니다.')
+      await expect(
+        controller.getConcertDateToCapacity({ concertName, concertOpenedDate }),
+      ).rejects.toThrow('날짜를 찾을 수 없습니다.');
     });
   });
 
@@ -208,7 +219,11 @@ describe('ConcertController', () => {
       const concertOpenedDate = '2024-03-08';
       const concertSeatNumber = 10;
 
-      const result = await controller.setConcertDateToCapacity({ concertName, concertOpenedDate, concertSeatNumber });
+      const result = await controller.setConcertDateToCapacity({
+        concertName,
+        concertOpenedDate,
+        concertSeatNumber,
+      });
 
       expect(result).toEqual(true);
     });
@@ -217,7 +232,13 @@ describe('ConcertController', () => {
       const concertName = '강수지 팬미팅';
       const concertOpenedDate = '2024-03-08';
       const concertSeatNumber = null;
-      await expect(controller.setConcertDateToCapacity({ concertName, concertOpenedDate, concertSeatNumber })).rejects.toThrow('좌석을 선택해 주세요.');
+      await expect(
+        controller.setConcertDateToCapacity({
+          concertName,
+          concertOpenedDate,
+          concertSeatNumber,
+        }),
+      ).rejects.toThrow('좌석을 선택해 주세요.');
     });
   });
 
@@ -227,7 +248,11 @@ describe('ConcertController', () => {
       const concertOpenedDate = '2024-03-08';
       const concertSeatNumber = 10;
 
-      const result = await controller.delConcertDateToCapacity({ concertName, concertOpenedDate, concertSeatNumber });
+      const result = await controller.delConcertDateToCapacity({
+        concertName,
+        concertOpenedDate,
+        concertSeatNumber,
+      });
 
       expect(result).toEqual(true);
     });
@@ -236,7 +261,13 @@ describe('ConcertController', () => {
       const concertName = '강수지 팬미팅';
       const concertOpenedDate = '2024-03-08';
       const concertSeatNumber = null;
-      await expect(controller.delConcertDateToCapacity({ concertName, concertOpenedDate, concertSeatNumber })).rejects.toThrow('좌석을 선택해 주세요.');
+      await expect(
+        controller.delConcertDateToCapacity({
+          concertName,
+          concertOpenedDate,
+          concertSeatNumber,
+        }),
+      ).rejects.toThrow('좌석을 선택해 주세요.');
     });
   });
 });
