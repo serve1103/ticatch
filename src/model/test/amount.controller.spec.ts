@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AmountController } from '../presentation/amount.controller';
 
-describe('ChargeAmountController', () => {
+describe('AmountController', () => {
   let controller: AmountController;
 
   beforeEach(async () => {
