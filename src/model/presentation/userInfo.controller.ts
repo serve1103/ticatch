@@ -1,28 +1,18 @@
 import { Controller, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { UserUseCase } from '../application/user.use-case';
+import { UesrIdRequest } from './dtos/request/user.request.dto';
 
 @ApiTags('유저 관리')
 @Controller('userInfo')
 export class UserInfoController {
-  constructor() {}
+  constructor(private readonly userUseCase: UserUseCase) {}
 
   // 특정 유저 정보 조회
   @ApiOperation({ summary: '유저 조회' })
   @Post('/getUserInfo')
-  async getUserInfo(userId: string): Promise<object> {
-    // 유저 아이디가 없을 때
-    if (!userId) throw new Error('유저를 찾을 수 없습니다.');
-
-    const userName = '테스트';
-    const userEmail = 'test@test.com';
-    const token = '1q2w3e4r';
-
-    return {
-      userId,
-      userName,
-      userEmail,
-      token,
-    };
+  async getUserInfo(uesrIdRequest: UesrIdRequest): Promise<object> {
+    return await this.userUseCase.searchByUser(uesrIdRequest.uesrId);
   }
 
   // 유저 등록
