@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
-export class AmountEntity {
+@Entity('UserWaitQueue')
+export class UserWaitQueue {
   @PrimaryGeneratedColumn()
   idx: number;
 
@@ -9,5 +9,5 @@ export class AmountEntity {
   userId: string;
 
   @Column()
-  userAmount: number;
+  state: 'WAITING' | 'USING' | 'DONE';
 }
