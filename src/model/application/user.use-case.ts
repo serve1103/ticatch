@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { UserInfoService } from '../domain/services/userInfo.service';
 import {
   UpdateUserRequest,
@@ -7,6 +8,7 @@ import {
 import { UserResponseDto } from '../presentation/dtos/response/user.response.dto';
 import { UserMapper } from '../presentation/mappers/user.mapper.d2m';
 
+@Injectable()
 export class UserUseCase {
   constructor(private readonly userInfoService: UserInfoService) {}
 

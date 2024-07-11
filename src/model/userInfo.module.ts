@@ -5,6 +5,7 @@ import { UserUseCase } from './application/user.use-case';
 import { UserInfoService } from './domain/services/userInfo.service';
 import { UserInfoRepositoryImpl } from './infrastructure/repositories/userInfo.repository';
 import { UserInfo } from './infrastructure/entities/userInfo.entity';
+import { userInfoRepositorySymbol } from './domain/interfaces/userInfo.repsitory.interface';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserInfo])],
@@ -13,10 +14,10 @@ import { UserInfo } from './infrastructure/entities/userInfo.entity';
     UserInfoService,
     UserUseCase,
     {
-      provide: 'UserInfoRepository',
+      provide: userInfoRepositorySymbol,
       useClass: UserInfoRepositoryImpl,
     },
   ],
-  exports: [UserInfoService, UserUseCase, 'UserInfoRepository'],
+  exports: [UserInfoService, UserUseCase, userInfoRepositorySymbol],
 })
 export class UserInfoModule {}

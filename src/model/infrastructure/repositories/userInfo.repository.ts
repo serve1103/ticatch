@@ -23,6 +23,10 @@ export class UserInfoRepositoryImpl implements UserInfoRepository {
       where: { userId },
     });
 
+    if (!userInfo) {
+      return null; // 여기서 null을 반환하여 이후 로직에서 처리할 수 있도록 함
+    }
+
     return UserMapper.toDomain(userInfo);
   }
 

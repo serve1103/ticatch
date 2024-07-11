@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity('UserInfo')
 export class UserInfo {
   @PrimaryGeneratedColumn()
   userInfoIdx: number;
@@ -17,6 +17,6 @@ export class UserInfo {
   @Column({ type: 'varchar', length: 100 })
   userEmail: string;
 
-  @Column({ type: 'blob', nullable: true })
-  token?: Buffer; // Binary 대신 Buffer 사용
+  @Column({ type: 'varbinary', nullable: true })
+  token?: Buffer;
 }

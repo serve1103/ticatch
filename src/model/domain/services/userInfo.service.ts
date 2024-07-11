@@ -1,11 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UserInfoRepository } from '../interfaces/userInfo.repsitory.interface';
+import {
+  UserInfoRepository,
+  userInfoRepositorySymbol,
+} from '../interfaces/userInfo.repsitory.interface';
 import { UserInfoModel } from '../models/userInfo.model';
 
 @Injectable()
 export class UserInfoService {
   constructor(
-    @Inject('UserInfoRepository')
+    @Inject(userInfoRepositorySymbol)
     private readonly userRepository: UserInfoRepository,
   ) {}
 
