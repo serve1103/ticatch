@@ -1,5 +1,3 @@
 export class UserResponseDto {
-  userId: string;
-  userName: string;
-  userEmail: string;
+  constructor(userId: string, userName: string, userEmail: string) {}
 }

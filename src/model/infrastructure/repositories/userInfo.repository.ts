@@ -3,8 +3,10 @@ import { UserInfoRepository } from '../../domain/interfaces/userInfo.repsitory.i
 import { UserInfoModel } from '../../domain/models/userInfo.model';
 import { UserInfo } from '../entities/userInfo.entity';
 import { Repository } from 'typeorm';
-import { UserMapper } from '../mappers/userInfo.mapper';
+import { UserMapper } from '../mappers/userInfo.mapper.e2m';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class UserInfoRepositoryImpl implements UserInfoRepository {
   constructor(
     @InjectRepository(UserInfo)

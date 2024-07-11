@@ -1,22 +1,42 @@
-import { UserInfoModel } from '../domain/models/userInfo.model';
 import { UserInfoService } from '../domain/services/userInfo.service';
+import {
+  UpdateUserRequest,
+  UserIdRequest,
+  UserInfoRequest,
+} from '../presentation/dtos/request/user.request.dto';
+import { UserResponseDto } from '../presentation/dtos/response/user.response.dto';
+import { UserMapper } from '../presentation/mappers/user.mapper.d2m';
 
 export class UserUseCase {
   constructor(private readonly userInfoService: UserInfoService) {}
 
-  searchAll(): Promise<UserInfoModel[]> {
-    return this.userInfoService.getUserInfoList();
+  async searchAll(): Promise<UserResponseDto[]> {
+    const users = await this.userInfoService.getUserInfoList();
+    return users.map((user) => UserMapper.toResponseDto(user));
   }
 
-  searchByUser(userId: string): Promise<UserInfoModel> {
-    return this.userInfoService.getUserInfo(userId);
+  async searchByUser(userIdRequest: UserIdRequest): Promise<UserResponseDto> {
+    const user = await this.userInfoService.getUserInfo(userIdRequest.userId);
+    return UserMapper.toResponseDto(user);
   }
 
-  executeByUser(userInfoModel: UserInfoModel): Promise<UserInfoModel> {
-    return this.userInfoService.setUserInfo(userInfoModel);
+  async executeByUser(
+    userInfoRequest: UserInfoRequest,
+  ): Promise<UserResponseDto> {
+    const userInfoModel = UserMapper.toModel(userInfoRequest);
+    const user = await this.userInfoService.setUserInfo(userInfoModel);
+    return UserMapper.toResponseDto(user);
   }
 
-  truncateByUser(userId: string): Promise<boolean> {
-    return this.userInfoService.delUserInfo(userId);
+  async updateUser(
+    updateUserRequest: UpdateUserRequest,
+  ): Promise<UserResponseDto> {
+    const userInfoModel = UserMapper.toUpdateModel(updateUserRequest);
+    const updatedUser = await this.userInfoService.setUserInfo(userInfoModel);
+    return UserMapper.toResponseDto(updatedUser);
+  }
+
+  async truncateByUser(userIdRequest: UserIdRequest): Promise<boolean> {
+    return await this.userInfoService.delUserInfo(userIdRequest.userId);
   }
 }

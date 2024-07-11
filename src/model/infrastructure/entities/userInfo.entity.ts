@@ -1,22 +1,22 @@
-import { Binary, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class UserInfo {
   @PrimaryGeneratedColumn()
   userInfoIdx: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100 })
   userId: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100 })
   userPw: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100 })
   userName: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100 })
   userEmail: string;
 
-  @Column()
-  token?: Binary;
+  @Column({ type: 'blob', nullable: true })
+  token?: Buffer; // Binary 대신 Buffer 사용
 }
