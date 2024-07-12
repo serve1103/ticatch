@@ -755,3 +755,10 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
     - 결제가 완료되면 좌석 소유권을 유저에게 배정하고, 대기열 토큰을 만료시킵니다.
 
 </details>
+
+<details>
+  <summary><span style="font-size: 1.5em;">Swagger API</span></summary>
+  
+  ![프로젝트_마일스톤](./src/asset/swagger%20api.png)
+
+</details>
