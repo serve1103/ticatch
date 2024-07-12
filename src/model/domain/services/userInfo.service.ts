@@ -42,4 +42,8 @@ export class UserInfoService {
     // 삭제 결과 반환
     return await this.userRepository.remove(userId);
   }
+
+  async setUserWait({ concertId, userId }): Promise<string> {
+    return 'WAIT';
+  }
 }
