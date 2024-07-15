@@ -43,7 +43,15 @@ export class UserInfoService {
     return await this.userRepository.remove(userId);
   }
 
+  async getUserWait(userId: string) {
+    return userId;
+  }
+
   async setUserWait({ concertId, userId }): Promise<string> {
     return 'WAIT';
+  }
+
+  async useAmount({ userId, amount }): Promise<object> {
+    return { state: 'use' };
   }
 }
