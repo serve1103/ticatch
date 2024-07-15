@@ -7,30 +7,37 @@ export class ConcertUseCase {
     private readonly userInfoService: UserInfoService,
   ) {}
 
-  async Concert(concertId: string, userId: string) {
+  /**
+   * 콘서트 조회
+   * 콘서트 상세조회 - 대기열 발생
+   * 콘서트 좌석조회
+   * 콘서트 좌석예약
+   * 콘서트 좌석 결제 - 예약 후 5분이 지났는지 확인 필
+   */
+  async SearchConcert(concertId: number, userId: string) {
     // 콘서트 조회
-    const searchConcert = await this.concertService.getConcert(concertId);
-    // 대기열 발생
-    const userWait = await this.userInfoService.setUserWait({
-      userId,
-      concertId,
-    });
-    if (userWait === 'WAIT') {
-      // 콘서트 좌석 조회
-      const searchConcertRoom =
-        await this.concertService.getConcertRoom(concertId);
-      // 콘서트 좌석 예약
-      const userConcertRoom =
-        await this.concertService.setConcertRoom(concertId);
-      // 결제
-      // 포인트 사용
-      const useAmount = await this.userInfoService.useAmount({
+    return await this.concertService.getConcert(concertId);
+  }
+
+  async getConcertOptions(concertId: number, userId: string) {
+    const getUserWait = await this.userInfoService.getUserWait(userId);
+
+    if (!getUserWait) {
+      // 대기열 발생
+      const setUserWait = await this.userInfoService.setUserWait({
         userId,
-        amount,
+        concertId,
       });
-      // 성공 시 좌석 확정
-      if (useAmount) await this.concertService.updateConcertRoom(concertId);
-      else throw new Error('');
     }
+
+    // 대기순서가 되면 조회 시도
+    if (getUserWait === 'READY')
+      await this.concertService.getConcertOption(concertId);
+  }
+
+  async getConcertOptionsRoom(ConcertOpIdx: number) {
+    return await this.concertService.getConcertOptionsRoom(ConcertOpIdx);
+    // 활성화 좌석만 조회
+    // 유저ID, 좌석번호, 가격
   }
 }

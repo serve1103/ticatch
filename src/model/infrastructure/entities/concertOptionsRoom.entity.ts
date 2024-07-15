@@ -9,5 +9,11 @@ export class ConcertOptionsRoom {
   concertRoomNumber: number;
 
   @Column()
+  concertRoomPrice: number;
+
+  @Column()
   userId: string;
+
+  @Column()
+  state: 'TAKEN' | 'AVAILABLE';
 }
