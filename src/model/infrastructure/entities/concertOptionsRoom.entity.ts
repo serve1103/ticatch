@@ -6,6 +6,9 @@ export class ConcertOptionsRoom {
   idx: number;
 
   @Column()
+  concertOptionsId: number;
+
+  @Column()
   concertRoomNumber: number;
 
   @Column()

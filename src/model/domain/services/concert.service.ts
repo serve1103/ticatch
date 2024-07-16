@@ -1,28 +1,33 @@
 import { Injectable } from '@nestjs/common';
+import { ConcertRepository } from '../interfaces/concert.repository.interface';
+import {
+  ConcertModel,
+  ConcertOptionsModel,
+  ConcertOptionsRoomModel,
+} from '../models/concert.model';
 
 @Injectable()
 export class ConcertService {
-  // 콘서트 전체 조회
-  getConcert(concertId: number): object {
-    const concertName = '강수지 드림콘서트';
-    return {
-      concertId,
-      concertName,
-    };
+  constructor(
+    private readonly concertRepository: ConcertRepository,
+    private readonly concertOptionsRepository: ConcertOptionsRepository,
+  ) {}
+
+  async getAllConcerts(): Promise<ConcertModel[]> {
+    return this.concertRepository.findAll();
   }
 
-  // 콘서트 상세 조회
-  getConcertOption(concertId: number) {}
-
-  // 콘서트 상세 좌석 조회
-  getConcertOptionsRoom(ConcertOpIdx: number): object {
-    return {
-      ConcertOpIdx,
-    };
+  async getConcert(concertId: number): Promise<ConcertModel> {
+    return this.concertRepository.findById(concertId);
   }
 
-  // 콘서트 상세 좌석 예약
-  setConcertOptionsRoom(concertId: number, userId: string) {}
+  async getConcertOptions(concertId: number): Promise<ConcertOptionsModel[]> {
+    return this.concertOptionsRepository.findByConcertId(concertId);
+  }
 
-  updateConcertRoom(concertId: number) {}
+  async getConcertOptionsRoom(
+    concertOptionsIdx: number,
+  ): Promise<ConcertOptionsRoomModel[]> {
+    return this.concertOptionsRepository.findRoomsByOptionId(concertOptionsIdx);
+  }
 }

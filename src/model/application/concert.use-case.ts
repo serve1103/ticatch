@@ -1,6 +1,12 @@
+import {
+  ConcertModel,
+  ConcertOptionsModel,
+  ConcertOptionsRoomModel,
+} from '../domain/models/concert.model';
 import { ConcertService } from '../domain/services/concert.service';
 import { UserInfoService } from '../domain/services/userInfo.service';
 
+@Injectable()
 export class ConcertUseCase {
   constructor(
     private readonly concertService: ConcertService,
@@ -8,36 +14,30 @@ export class ConcertUseCase {
   ) {}
 
   /**
-   * 콘서트 조회
-   * 콘서트 상세조회 - 대기열 발생
-   * 콘서트 좌석조회
-   * 콘서트 좌석예약
-   * 콘서트 좌석 결제 - 예약 후 5분이 지났는지 확인 필
+   * 전체 콘서트 조회
+   * @returns 모든 콘서트 정보
    */
-  async SearchConcert(concertId: number, userId: string) {
-    // 콘서트 조회
-    return await this.concertService.getConcert(concertId);
+  async searchAllConcerts(): Promise<ConcertModel[]> {
+    return await this.concertService.getAllConcerts();
   }
 
-  async getConcertOptions(concertId: number, userId: string) {
-    const getUserWait = await this.userInfoService.getUserWait(userId);
-
-    if (!getUserWait) {
-      // 대기열 발생
-      const setUserWait = await this.userInfoService.setUserWait({
-        userId,
-        concertId,
-      });
-    }
-
-    // 대기순서가 되면 조회 시도
-    if (getUserWait === 'READY')
-      await this.concertService.getConcertOption(concertId);
+  /**
+   * 콘서트 옵션 조회
+   * @param concertId 콘서트 ID
+   * @returns 콘서트 옵션 정보
+   */
+  async getConcertOptions(concertId: number): Promise<ConcertOptionsModel[]> {
+    return await this.concertService.getConcertOptions(concertId);
   }
 
-  async getConcertOptionsRoom(ConcertOpIdx: number) {
-    return await this.concertService.getConcertOptionsRoom(ConcertOpIdx);
-    // 활성화 좌석만 조회
-    // 유저ID, 좌석번호, 가격
+  /**
+   * 콘서트 옵션 좌석 조회
+   * @param concertOptionsIdx 콘서트 옵션 ID
+   * @returns 콘서트 옵션 좌석 정보
+   */
+  async getConcertOptionsRoom(
+    concertOptionsIdx: number,
+  ): Promise<ConcertOptionsRoomModel[]> {
+    return await this.concertService.getConcertOptionsRoom(concertOptionsIdx);
   }
 }

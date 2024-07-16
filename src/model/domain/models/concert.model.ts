@@ -17,6 +17,7 @@ export class ConcertOptionsModel {
 
 export class ConcertOptionsRoomModel {
   constructor(
+    public concertOptionsIdx: number,
     public roomNumber: number,
     public roomPrice: number,
     public userId: string,

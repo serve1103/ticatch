@@ -13,6 +13,7 @@ import { ConcertOptionsRoom } from 'src/model/infrastructure/entities/concertOpt
 import {
   ConcertMapper,
   ConcertOptionsMapper,
+  ConcertOptionsRoomMapper,
 } from 'src/model/infrastructure/mappers/concert.mapper.e2m';
 
 @Injectable()
@@ -86,17 +87,26 @@ export class ConcertRepositoryImpl implements ConcertRepository {
 
   async findByConcertOptionsRoomId(
     concertOptionsId: number,
-  ): Promise<ConcertOptionsRoomModel> {
-    return;
+  ): Promise<ConcertOptionsRoomModel[]> {
+    const concertOptionsRoom = await this.concertOptionsRoomRepository.find({
+      where: { concertOptionsId, state: 'TAKEN' },
+    });
+    return concertOptionsRoom.map((item) =>
+      ConcertOptionsRoomMapper.toDomain(item),
+    );
   }
 
   async saveConcertOptionsRoom(
     concertOptionsRoomModel: ConcertOptionsRoomModel,
   ): Promise<ConcertOptionsRoomModel> {
-    return;
-  }
+    const concertDetailSeatData =
+      await this.concertOptionsRoomRepository.create(
+        ConcertOptionsRoomMapper.toEntity(concertOptionsRoomModel),
+      );
 
-  async delConcertOptionsRoom(concertOptionsId: number): Promise<object> {
-    return;
+    const savedConcertDetailRoom = await this.concertOptionsRoomRepository.save(
+      concertDetailSeatData,
+    );
+    return ConcertOptionsRoomMapper.toDomain(savedConcertDetailRoom);
   }
 }

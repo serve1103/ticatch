@@ -19,9 +19,8 @@ export interface ConcertRepository {
 
   findByConcertOptionsRoomId(
     concertOptionsId: number,
-  ): Promise<ConcertOptionsRoomModel>;
+  ): Promise<ConcertOptionsRoomModel[]>;
   saveConcertOptionsRoom(
     concertOptionsRoomModel: ConcertOptionsRoomModel,
   ): Promise<ConcertOptionsRoomModel>;
-  delConcertOptionsRoom(concertId: number): Promise<object>;
 }

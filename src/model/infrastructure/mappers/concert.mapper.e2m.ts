@@ -48,6 +48,7 @@ export class ConcertOptionsMapper {
 export class ConcertOptionsRoomMapper {
   static toDomain(entity: ConcertOptionsRoom): ConcertOptionsRoomModel {
     return new ConcertOptionsRoomModel(
+      entity.concertOptionsId,
       entity.concertRoomNumber,
       entity.concertRoomPrice,
       entity.userId,
@@ -58,6 +59,7 @@ export class ConcertOptionsRoomMapper {
   static toEntity(domain: ConcertOptionsRoomModel): ConcertOptionsRoom {
     const entity = new ConcertOptionsRoom();
 
+    entity.concertOptionsId = domain.concertOptionsIdx;
     entity.concertRoomNumber = domain.roomNumber;
     entity.concertRoomPrice = domain.roomPrice;
     entity.userId = domain.userId;
