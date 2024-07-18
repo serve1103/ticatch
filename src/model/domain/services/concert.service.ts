@@ -35,7 +35,34 @@ export class ConcertService {
     );
   }
 
-  // 판매가능 좌석 조회
-  async getAvailableRooms() {}
   // 좌석 상태 변경
+
+  async saveConcertOptionsRoom(
+    concertOptionsRoomId: number,
+  ): Promise<ConcertOptionsRoomModel> {
+    // 해당 좌석 정보를 조회
+    const concertOptionsRooms =
+      await this.concertOptionsRoomRepository.findByConcertOptionsRoomId(
+        concertOptionsRoomId,
+      );
+    if (!concertOptionsRooms || concertOptionsRooms.length === 0) {
+      throw new Error('좌석을 찾을 수 없습니다.');
+    }
+
+    // 특정 id에 해당하는 좌석을 찾음
+    const concertOptionsRoom = concertOptionsRooms.find(
+      (room) => room.id === concertOptionsRoomId,
+    );
+    if (!concertOptionsRoom) {
+      throw new Error('좌석을 찾을 수 없습니다.');
+    }
+
+    // 좌석 상태를 변경 (예: 'available' -> 'TAKEN')
+    concertOptionsRoom.state = 'TAKEN';
+
+    // 변경된 상태를 저장
+    return this.concertOptionsRoomRepository.saveConcertOptionsRoom(
+      concertOptionsRoom,
+    );
+  }
 }
