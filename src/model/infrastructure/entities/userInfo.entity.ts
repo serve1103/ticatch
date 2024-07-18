@@ -1,22 +1,24 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+} from 'typeorm';
 
-@Entity('UserInfo')
+@Entity()
 export class UserInfo {
-  @PrimaryGeneratedColumn()
-  userInfoIdx: number;
+  @PrimaryGeneratedColumn('uuid')
+  token: string;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column()
   userId: string;
 
-  @Column({ type: 'varchar', length: 100 })
-  userPw: string;
+  @Column()
+  position: number;
 
-  @Column({ type: 'varchar', length: 100 })
-  userName: string;
+  @Column()
+  estimatedWaitTime: number;
 
-  @Column({ type: 'varchar', length: 100 })
-  userEmail: string;
-
-  @Column({ type: 'varbinary', nullable: true })
-  token?: Buffer;
+  @CreateDateColumn()
+  createdAt: Date;
 }

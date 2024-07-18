@@ -27,86 +27,22 @@ export class ConcertRepositoryImpl implements ConcertRepository {
     private readonly concertOptionsRoomRepository: Repository<ConcertOptionsRoom>,
   ) {}
 
-  async findByAll(): Promise<ConcertModel[]> {
-    const getConcert = await this.concertRepository.find();
-
-    if (!getConcert) throw new Error('콘서트를 찾을 수 없습니다.');
-
-    return getConcert.map((item) => ConcertMapper.toDomain(item));
+  async findAllDates(): Promise<string[]> {
+    const concerts = await this.concertRepository.find();
+    return concerts.map((concert) => concert.date);
   }
 
-  async saveConcert(concertModel: ConcertModel): Promise<ConcertModel> {
-    const concertData = await this.concertRepository.create(
-      ConcertMapper.toEntity(concertModel),
-    );
-    const savedConcert = await this.concertRepository.save(concertData);
-
-    return ConcertMapper.toDomain(savedConcert);
+  async findSeatsByDate(date: string): Promise<string[]> {
+    const concert = await this.concertRepository.findOne({ where: { date } });
+    return concert ? concert.seats : [];
   }
 
-  async delConcert(concertId: number): Promise<object> {
-    return await this.concertRepository.delete(concertId);
-  }
-
-  async findByConcertOptionsId(
-    concertId: number,
-  ): Promise<ConcertOptionsModel[]> {
-    // 현재 시점
-    const nowDate = new Date();
-
-    const getConcertDetail = await this.concertOptionsRepository.find({
-      where: {
-        concertIdx: concertId,
-        concertOpenedDate: LessThan(nowDate),
-        concertClosedDate: MoreThan(nowDate),
-      },
-    });
-
-    if (!getConcertDetail)
-      throw new Error('콘서트 세부내역을 찾을 수 없습니다.');
-
-    return getConcertDetail.map((item) => ConcertOptionsMapper.toDomain(item));
-  }
-
-  async saveConcertOptions(
-    concertOptionsModel: ConcertOptionsModel,
-  ): Promise<ConcertOptionsModel> {
-    const concertDetailData = await this.concertOptionsRepository.create(
-      ConcertOptionsMapper.toEntity(concertOptionsModel),
-    );
-
-    const savedConcertDetail =
-      await this.concertOptionsRepository.save(concertDetailData);
-
-    return ConcertOptionsMapper.toDomain(savedConcertDetail);
-  }
-
-  async delConcertOptions(concertOptionsId: number): Promise<object> {
-    return await this.concertOptionsRepository.delete(concertOptionsId);
-  }
-
-  async findByConcertOptionsRoomId(
-    concertOptionsId: number,
-  ): Promise<ConcertOptionsRoomModel[]> {
-    const concertOptionsRoom = await this.concertOptionsRoomRepository.find({
-      where: { concertOptionsId, state: 'TAKEN' },
-    });
-    return concertOptionsRoom.map((item) =>
-      ConcertOptionsRoomMapper.toDomain(item),
-    );
-  }
-
-  async saveConcertOptionsRoom(
-    concertOptionsRoomModel: ConcertOptionsRoomModel,
-  ): Promise<ConcertOptionsRoomModel> {
-    const concertDetailSeatData =
-      await this.concertOptionsRoomRepository.create(
-        ConcertOptionsRoomMapper.toEntity(concertOptionsRoomModel),
-      );
-
-    const savedConcertDetailRoom = await this.concertOptionsRoomRepository.save(
-      concertDetailSeatData,
-    );
-    return ConcertOptionsRoomMapper.toDomain(savedConcertDetailRoom);
+  async updateSeats(date: string, seats: string[]): Promise<ConcertModel> {
+    const concert = await this.concertRepository.findOne({ where: { date } });
+    if (concert) {
+      concert.seats = seats;
+      return await this.concertRepository.save(ConcertMapper.toEntity(concert));
+    }
+    throw new Error('Concert not found');
   }
 }

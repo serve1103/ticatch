@@ -1,10 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('Concert')
+@Entity()
 export class Concert {
   @PrimaryGeneratedColumn()
-  concertIdx: number;
+  id: number;
 
-  @Column()
-  concertName: string;
+  @Column('simple-array')
+  seats: string[];
+  date: any;
 }

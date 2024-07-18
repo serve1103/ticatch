@@ -1,57 +1,36 @@
-import { Inject, Injectable } from '@nestjs/common';
-import {
-  UserInfoRepository,
-  userInfoRepositorySymbol,
-} from '../interfaces/userInfo.repsitory.interface';
-import { UserInfoModel } from '../models/userInfo.model';
+import { Injectable } from '@nestjs/common';
+import { v4 as uuidv4 } from 'uuid';
+import { UserInfoRepository } from '../interfaces/userInfo.repsitory.interface';
 
 @Injectable()
 export class UserInfoService {
-  constructor(
-    @Inject(userInfoRepositorySymbol)
-    private readonly userRepository: UserInfoRepository,
-  ) {}
+  constructor(private readonly userInfoRepository: UserInfoRepository) {}
 
-  async getUserInfoList(): Promise<UserInfoModel[]> {
-    return await this.userRepository.findAll();
+  async issueToken(userId: string): Promise<string> {
+    const token = uuidv4();
+    const position = (await this.userInfoRepository.countAll()) + 1;
+    const estimatedWaitTime = position * 5; // 5분 단위 대기 시간 예측
+
+    await this.userInfoRepository.createToken(
+      userId,
+      token,
+      position,
+      estimatedWaitTime,
+    );
+
+    return token;
   }
 
-  async getUserInfo(userId: string): Promise<UserInfoModel> {
-    const userInfo = await this.userRepository.findByUserId(userId);
-    if (!userInfo) throw new Error('유저를 찾을 수 없습니다.');
-    return userInfo;
-  }
-
-  async setUserInfo(userInfoModel: UserInfoModel): Promise<UserInfoModel> {
-    const userFind = await this.userRepository.findByUserId(userInfoModel.id);
-
-    // 등록된 유저 확인
-    if (userFind) throw new Error('이미 등록된 아이디 입니다.');
-
-    // 유저 저장
-    const savedUserInfo = await this.userRepository.save(userInfoModel);
-
-    return savedUserInfo;
-  }
-
-  async delUserInfo(userId: string): Promise<boolean> {
-    const userFind = await this.userRepository.findByUserId(userId);
-    // 등록된 유저 확인
-    if (!userFind) throw new Error('존재하지 않는 아이디 입니다.');
-
-    // 삭제 결과 반환
-    return await this.userRepository.remove(userId);
-  }
-
-  async getUserWait(userId: string) {
-    return userId;
-  }
-
-  async setUserWait({ concertId, userId }): Promise<string> {
-    return 'WAIT';
-  }
-
-  async useAmount({ userId, amount }): Promise<object> {
-    return { state: 'use' };
+  async getTokenInfo(
+    token: string,
+  ): Promise<{ position: number; estimatedWaitTime: number } | null> {
+    const userInfo = await this.userInfoRepository.findByToken(token);
+    if (userInfo) {
+      return {
+        position: userInfo.position,
+        estimatedWaitTime: userInfo.estimatedWaitTime,
+      };
+    }
+    return null;
   }
 }

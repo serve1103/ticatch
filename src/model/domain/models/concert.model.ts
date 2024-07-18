@@ -1,6 +1,6 @@
 export class ConcertModel {
   constructor(
-    public name: string,
+    public seats: string[],
     public id?: number,
   ) {}
 }
