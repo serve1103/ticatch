@@ -4,8 +4,8 @@ import {
   UpdateUserRequest,
   UserIdRequest,
   UserInfoRequest,
-} from '@app/presentation/dtos/request/user.request.dto';
-import { UserResponseDto } from '@app/presentation/dtos/response/user.response.dto';
+} from '@app/presentation/dto/user.request.dto';
+import { UserResponseDto } from '@app/presentation/dto/user.response.dto';
 import { UserMapper } from '@app/presentation/mappers/user.mapper.d2m';
 
 @Injectable()

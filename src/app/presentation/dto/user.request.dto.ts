@@ -24,3 +24,14 @@ export class UpdateUserRequest {
   @ApiProperty({ description: '유저Email' })
   userEmail: string;
 }
+
+export class GetUserPointDto {
+  @ApiProperty({ description: '유저Id' })
+  userId: string;
+
+  toDmain() {
+    return {
+      userId: this.userId,
+    };
+  }
+}

@@ -1,5 +1,7 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { GetUserAmountDto } from './dto/amount.request.dto';
+import { UserAmountResponseDto } from './dto/amount.response.dto';
 
 @ApiTags('충전 관리')
 @Controller('amount')
@@ -22,13 +24,11 @@ export class AmountController {
 
   // 금액 조회
   @ApiOperation({ summary: '충전 금액 조회' })
-  @Post('/getChargeAmount')
-  async getChargeAmount({ userId }): Promise<object> {
-    const userAmount = 10000;
-
-    if (!userId) throw new Error('유저를 찾을 수 없습니다.');
-
-    return { userId, userAmount };
+  @Get('/getChargeAmount')
+  async getChargeAmount(
+    @Body() getUserAmountDto: GetUserAmountDto,
+  ): Promise<object> {
+    return new UserAmountResponseDto(await this.amountService.);
   }
 
   // 금액 조회
