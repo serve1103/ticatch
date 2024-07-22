@@ -3,9 +3,9 @@ import {
   ConcertModel,
   ConcertOptionsModel,
   ConcertOptionsRoomModel,
-} from '../domain/models/concert.model';
-import { ConcertService } from '../domain/services/concert.service';
-import { UserInfoService } from '../domain/services/userInfo.service';
+} from '@app/domain/models/concert.model';
+import { ConcertService } from '@app/domain/services/concert.service';
+import { UserInfoService } from '@app/domain/services/userInfo.service';
 
 @Injectable()
 export class ConcertUseCase {

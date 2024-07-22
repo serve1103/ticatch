@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { ConcertRepository } from '../interfaces/concert.repository.interface';
+import { ConcertRepository } from '@app/domain/interfaces/concert.repository.interface';
 import {
   ConcertModel,
   ConcertOptionsModel,
   ConcertOptionsRoomModel,
-} from '../models/concert.model';
-import { ConcertOptionsRepository } from '../interfaces/concertOptions.repository.interface';
-import { ConcertOptionsRoomRepository } from '../interfaces/concertOptionsRoom.repository.interface';
+} from '@app/domain/models/concert.model';
+import { ConcertOptionsRepository } from '@app/domain/interfaces/concertOptions.repository.interface';
+import { ConcertOptionsRoomRepository } from '@app/domain/interfaces/concertOptionsRoom.repository.interface';
 
 @Injectable()
 export class ConcertService {

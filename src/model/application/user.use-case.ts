@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { UserInfoService } from '../domain/services/userInfo.service';
+import { UserInfoService } from '@app/domain/services/userInfo.service';
 import {
   UpdateUserRequest,
   UserIdRequest,
   UserInfoRequest,
-} from '../presentation/dtos/request/user.request.dto';
-import { UserResponseDto } from '../presentation/dtos/response/user.response.dto';
-import { UserMapper } from '../presentation/mappers/user.mapper.d2m';
+} from '@app/presentation/dtos/request/user.request.dto';
+import { UserResponseDto } from '@app/presentation/dtos/response/user.response.dto';
+import { UserMapper } from '@app/presentation/mappers/user.mapper.d2m';
 
 @Injectable()
 export class UserUseCase {

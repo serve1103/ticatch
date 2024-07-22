@@ -2,10 +2,10 @@ import {
   ConcertModel,
   ConcertOptionsModel,
   ConcertOptionsRoomModel,
-} from 'src/model/domain/models/concert.model';
-import { Concert } from 'src/model/infrastructure/entities/concert.entity';
-import { ConcertOptions } from 'src/model/infrastructure/entities/concertOptions.entity';
-import { ConcertOptionsRoom } from '../entities/concertOptionsRoom.entity';
+} from '@app/domain/models/concert.model';
+import { Concert } from '@app/infrastructure/entities/concert.entity';
+import { ConcertOptions } from '@app/infrastructure/entities/concertOptions.entity';
+import { ConcertOptionsRoom } from '@app/infrastructure/entities/concertOptionsRoom.entity';
 
 export class ConcertMapper {
   static toDomain(entity: Concert): ConcertModel {

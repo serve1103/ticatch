@@ -1,4 +1,4 @@
-import { ConcertOptionsModel } from '../models/concert.model';
+import { ConcertOptionsModel } from '@app/domain/models/concert.model';
 
 export const concertOptionsSymbol = Symbol.for('ConcertOptions');
 

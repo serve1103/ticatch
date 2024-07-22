@@ -1,4 +1,4 @@
-import { ConcertOptionsRoomModel } from '../models/concert.model';
+import { ConcertOptionsRoomModel } from '@app/domain/models/concert.model';
 
 export const concertOptionsRoomSymbol = Symbol.for('ConcertOptionsRoom');
 

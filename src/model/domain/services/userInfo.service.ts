@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
-import { UserInfoRepository } from '../interfaces/userInfo.repsitory.interface';
+import { UserInfoRepository } from '@app/domain/interfaces/userInfo.repsitory.interface';
 
 @Injectable()
 export class UserInfoService {

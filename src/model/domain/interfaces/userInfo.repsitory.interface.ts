@@ -1,4 +1,4 @@
-import { UserInfoModel } from '../models/userInfo.model';
+import { UserInfoModel } from '@app/domain/models/userInfo.model';
 
 export const userInfoRepositorySymbol = Symbol.for('UserInfoRepository');
 

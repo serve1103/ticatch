@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LessThan, MoreThan, Repository } from 'typeorm';
-import { ConcertRepository } from 'src/model/domain/interfaces/concert.repository.interface';
+import { ConcertRepository } from '@app/domain/interfaces/concert.repository.interface';
 import {
   ConcertModel,
   ConcertOptionsModel,
   ConcertOptionsRoomModel,
-} from 'src/model/domain/models/concert.model';
-import { Concert } from 'src/model/infrastructure/entities/concert.entity';
-import { ConcertOptions } from 'src/model/infrastructure/entities/concertOptions.entity';
-import { ConcertOptionsRoom } from 'src/model/infrastructure/entities/concertOptionsRoom.entity';
+} from '@app/domain/models/concert.model';
+import { Concert } from '@app/infrastructure/entities/concert.entity';
+import { ConcertOptions } from '@app/infrastructure/entities/concertOptions.entity';
+import { ConcertOptionsRoom } from '@app/infrastructure/entities/concertOptionsRoom.entity';
 import {
   ConcertMapper,
   ConcertOptionsMapper,
   ConcertOptionsRoomMapper,
-} from 'src/model/infrastructure/mappers/concert.mapper.e2m';
+} from '@app/infrastructure/mappers/concert.mapper.e2m';
 
 @Injectable()
 export class ConcertRepositoryImpl implements ConcertRepository {

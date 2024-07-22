@@ -1,10 +1,10 @@
-import { UserInfoModel } from 'src/model/domain/models/userInfo.model';
-import { UserResponseDto } from '../dtos/response/user.response.dto';
+import { UserInfoModel } from '@app/domain/models/userInfo.model';
+import { UserResponseDto } from '@app/presentation/dtos/response/user.response.dto';
 import {
   UpdateUserRequest,
   UserIdRequest,
   UserInfoRequest,
-} from '../dtos/request/user.request.dto';
+} from '@app/presentation/dtos/request/user.request.dto';
 
 export class UserMapper {
   static toResponseDto(domain: UserInfoModel): UserResponseDto {

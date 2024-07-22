@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ConcertUseCase } from '../application/concert.use-case';
+import { ConcertUseCase } from '@app/application/concert.use-case';
 import {
   ConcertOptionsModel,
   ConcertOptionsRoomModel,
-} from '../domain/models/concert.model';
+} from '@app/domain/models/concert.model';
 
 @ApiTags('콘서트 관리')
 @Controller('concert')
