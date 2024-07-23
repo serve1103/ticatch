@@ -9,5 +9,10 @@ export class UserAmountHistory {
   @Column()
   userAmount: number;
   @Column()
-  Gubun: 'CHARGE' | 'USE';
+  Gubun: UserAmountHistoryGubun;
+}
+
+export enum UserAmountHistoryGubun {
+  CHARGE = 'CHARGE',
+  USE = 'USE',
 }
