@@ -1,8 +1,5 @@
 import { AmountModel } from '@app/domain/models/amount.model';
-import {
-  AmountHistoryModel,
-  AmountHistoryState,
-} from '@app/domain/models/amountHistory.model';
+import { AmountHistoryState } from '@app/domain/models/amountHistory.model';
 import { AmountService } from '@app/domain/services/amount.service';
 import { AmountHistoryService } from '@app/domain/services/amountHistory.service';
 import { Injectable } from '@nestjs/common';

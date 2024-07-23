@@ -1,8 +1,5 @@
 import { AmountHistoryRepository } from '@app/domain/interfaces/amountHistory.repository.interface';
-import {
-  AmountHistoryModel,
-  AmountHistoryState,
-} from '@app/domain/models/amountHistory.model';
+import { AmountHistoryModel } from '@app/domain/models/amountHistory.model';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserAmountHistory } from '@app/infrastructure/entities/userAmountHistory.entity';
 import { Repository } from 'typeorm';
