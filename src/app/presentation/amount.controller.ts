@@ -1,25 +1,18 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { GetUserAmountDto } from './dto/amount.request.dto';
+import { GetUserAmountDto, SetUserAmountDto } from './dto/amount.request.dto';
 import { UserAmountResponseDto } from './dto/amount.response.dto';
+import { UserAmountUseCase } from '@app/application/amount.use-case';
 
 @ApiTags('충전 관리')
 @Controller('amount')
 export class AmountController {
+  constructor(private readonly userAmountUseCase: UserAmountUseCase) {}
   // 금액 충전
   @ApiOperation({ summary: '금액 충전' })
   @Post('/setChargeAmount')
-  async setChargeAmount({ userId, chargeAmount }): Promise<object> {
-    const userAmount = 10000;
-
-    if (chargeAmount === null || chargeAmount === undefined)
-      throw new Error('금액을 입력해주세요.');
-
-    if (chargeAmount == 0) throw new Error('0원은 충전할 수 없습니다.');
-
-    const userChargeAmount = userAmount + chargeAmount;
-
-    return { userId, userChargeAmount };
+  async setChargeAmount(setUserAmountDto: SetUserAmountDto): Promise<object> {
+    return this.userAmountUseCase.chargeUserPoint(setUserAmountDto);
   }
 
   // 금액 조회
@@ -28,7 +21,7 @@ export class AmountController {
   async getChargeAmount(
     @Body() getUserAmountDto: GetUserAmountDto,
   ): Promise<object> {
-    return new UserAmountResponseDto(await this.amountService.);
+    return new UserAmountResponseDto(await this.amountService.getUserAmount());
   }
 
   // 금액 조회
