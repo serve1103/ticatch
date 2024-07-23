@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, VersionColumn } from 'typeorm';
 
 @Entity('ConcertOptionsRoom')
 export class ConcertOptionsRoom {
@@ -18,5 +18,13 @@ export class ConcertOptionsRoom {
   userId: string;
 
   @Column()
-  state: 'TAKEN' | 'AVAILABLE';
+  state: ConcertRoomState;
+
+  @VersionColumn()
+  version: number;
+}
+
+export enum ConcertRoomState {
+  TAKEN = 'TAKEN',
+  AVAILABLE = 'AVAILABLE',
 }

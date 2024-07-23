@@ -16,6 +16,10 @@ export class ConcertService {
     private readonly concertOptionsRoomRepository: ConcertOptionsRoomRepository,
   ) {}
 
+  async getConcertAll(): Promise<ConcertModel[]> {
+    return await this.concertRepository.findAll();
+  }
+
   async getAvailableDates(): Promise<string[]> {
     return await this.concertRepository.findAllDates();
   }

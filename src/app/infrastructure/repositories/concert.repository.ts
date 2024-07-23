@@ -27,22 +27,63 @@ export class ConcertRepositoryImpl implements ConcertRepository {
     private readonly concertOptionsRoomRepository: Repository<ConcertOptionsRoom>,
   ) {}
 
-  async findAllDates(): Promise<string[]> {
-    const concerts = await this.concertRepository.find();
-    return concerts.map((concert) => concert.date);
-  }
-
-  async findSeatsByDate(date: string): Promise<string[]> {
-    const concert = await this.concertRepository.findOne({ where: { date } });
-    return concert ? concert.seats : [];
-  }
-
-  async updateSeats(date: string, seats: string[]): Promise<ConcertModel> {
-    const concert = await this.concertRepository.findOne({ where: { date } });
-    if (concert) {
-      concert.seats = seats;
-      return await this.concertRepository.save(ConcertMapper.toEntity(concert));
+  // 콘서트 전체 조회
+  async findAllOrConcertId(concertId: number): Promise<ConcertModel[]> {
+    let concerts = null;
+    if (!concertId) {
+      // 모든 콘서트를 조회
+      concerts = await this.concertRepository.find();
+    } else {
+      concerts = await this.concertRepository.find({
+        where: { id: concertId },
+      });
     }
-    throw new Error('Concert not found');
+
+    // 각 콘서트의 옵션을 조회하고 매핑
+    const concertModels = await Promise.all(
+      concerts.map(async (concert) => {
+        const options = await this.concertOptionsRepository.find({
+          where: { concertIdx: concert.id },
+        });
+        return ConcertMapper.toDomain(concert, options);
+      }),
+    );
+
+    return concertModels;
+  }
+
+  // 특정 콘서트 조회
+  async findSeatsByDate(
+    concertOptionsId: number,
+  ): Promise<ConcertOptionsModel[]> {
+    // 오늘 날짜 불러오기
+    const today = new Date();
+
+    // 해당 콘서트와 오늘 날짜 이후의 옵션 조회
+    const concertOptions = await this.concertOptionsRepository.find({
+      where: {
+        concertIdx: concertOptionsId,
+        concertOpenedDate: MoreThan(today),
+      },
+    });
+
+    if (!concertOptions || concertOptions.length === 0) {
+      throw new Error('Concert options not found for the given date');
+    }
+
+    // 각 콘서트 옵션에 대한 좌석 정보 조회
+    const concertOptionsRooms = await Promise.all(
+      concertOptions.map(async (option) => {
+        const rooms = await this.concertOptionsRoomRepository.find({
+          where: { concertOptionsId: option.idx },
+        });
+        return rooms.map((room) =>
+          ConcertOptionsMapper.toOptionsRoomModel(room),
+        );
+      }),
+    );
+
+    // 다차원 배열을 1차원 배열로 변환
+    return concertOptionsRooms.flat();
   }
 }

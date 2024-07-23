@@ -8,21 +8,31 @@ import { ConcertOptions } from '@app/infrastructure/entities/concertOptions.enti
 import { ConcertOptionsRoom } from '@app/infrastructure/entities/concertOptionsRoom.entity';
 
 export class ConcertMapper {
-  static toDomain(entity: Concert): ConcertModel {
-    return new ConcertModel(entity.concertName, entity.concertIdx);
+  static toDomain(concert: Concert, options: ConcertOptions[]): ConcertModel {
+    const optionsModels = options.map(
+      (option) =>
+        new ConcertOptionsModel(
+          option.concertOpenedDate,
+          option.concertClosedDate,
+          option.concertMaxCapacity,
+          option.concertApplyCapacity,
+          option.concertIdx,
+        ),
+    );
+    return new ConcertModel(concert.id, concert.concertName, optionsModels);
   }
+
   static toEntity(domain: ConcertModel): Concert {
     const entity = new Concert();
-
-    entity.concertIdx = domain.id;
-    entity.concertName = domain.name;
+    entity.id = domain.id;
+    entity.concertName = domain.concertName;
 
     return entity;
   }
 }
 
 export class ConcertOptionsMapper {
-  static toDomain(entity: ConcertOptions): ConcertOptionsModel {
+  static toOptionsModel(entity: ConcertOptions): ConcertOptionsModel {
     return new ConcertOptionsModel(
       entity.concertOpenedDate,
       entity.concertClosedDate,
@@ -32,16 +42,17 @@ export class ConcertOptionsMapper {
     );
   }
 
-  static toEntity(domain: ConcertOptionsModel): ConcertOptions {
-    const entity = new ConcertOptions();
-
-    entity.concertIdx = domain.concertIdx;
-    entity.concertOpenedDate = domain.opened_at;
-    entity.concertClosedDate = domain.closed_at;
-    entity.concertMaxCapacity = domain.maxCapacity;
-    entity.concertApplyCapacity = domain.applyCapacity;
-
-    return entity;
+  static toOptionsRoomModel(
+    entity: ConcertOptionsRoom,
+  ): ConcertOptionsRoomModel {
+    return new ConcertOptionsRoomModel(
+      entity.concertOptionsId,
+      entity.concertRoomNumber,
+      entity.concertRoomPrice,
+      entity.userId,
+      entity.state,
+      entity.idx,
+    );
   }
 }
 

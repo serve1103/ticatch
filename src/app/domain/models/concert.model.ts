@@ -1,14 +1,15 @@
 export class ConcertModel {
   constructor(
-    public seats: string[],
-    public id?: number,
+    public id: number,
+    public concertName: string,
+    public options: ConcertOptionsModel[],
   ) {}
 }
 
 export class ConcertOptionsModel {
   constructor(
-    public opened_at: Date,
-    public closed_at: Date,
+    public openedAt: Date,
+    public closedAt: Date,
     public maxCapacity: number,
     public applyCapacity: number,
     public concertIdx?: number,
@@ -21,7 +22,12 @@ export class ConcertOptionsRoomModel {
     public roomNumber: number,
     public roomPrice: number,
     public userId: string,
-    public state: 'TAKEN' | 'AVAILABLE',
+    public state: ConcertRoomState,
     public id?: number,
   ) {}
+}
+
+export enum ConcertRoomState {
+  TAKEN = 'TAKEN',
+  AVAILABLE = 'AVAILABLE',
 }

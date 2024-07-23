@@ -5,40 +5,15 @@ import {
   ConcertOptionsRoomModel,
 } from '@app/domain/models/concert.model';
 import { ConcertService } from '@app/domain/services/concert.service';
-import { UserInfoService } from '@app/domain/services/userInfo.service';
 
 @Injectable()
 export class ConcertUseCase {
-  constructor(
-    private readonly concertService: ConcertService,
-    private readonly userInfoService: UserInfoService,
-  ) {}
+  constructor(private readonly concertService: ConcertService) {}
 
-  /**
-   * 전체 콘서트 조회
-   * @returns 모든 콘서트 정보
-   */
-  async searchAllConcerts(): Promise<ConcertModel[]> {
-    return await this.concertService.getAllConcerts();
+  // 전체 조회
+  async getConcertAll(): Promise<ConcertModel[]> {
+    return await this.concertService.getConcertList();
   }
-
-  /**
-   * 콘서트 옵션 조회
-   * @param concertId 콘서트 ID
-   * @returns 콘서트 옵션 정보
-   */
-  async getConcertOptions(concertId: number): Promise<ConcertOptionsModel[]> {
-    return await this.concertService.getConcertOptions(concertId);
-  }
-
-  /**
-   * 콘서트 옵션 좌석 조회
-   * @param concertOptionsIdx 콘서트 옵션 ID
-   * @returns 콘서트 옵션 좌석 정보
-   */
-  async getConcertOptionsRoom(
-    concertOptionsIdx: number,
-  ): Promise<ConcertOptionsRoomModel[]> {
-    return await this.concertService.getConcertOptionsRoom(concertOptionsIdx);
-  }
+  // 특정 콘서트 일자 조회
+  // 특정 콘서트 특정 일자 예약가능 좌석 조회
 }
