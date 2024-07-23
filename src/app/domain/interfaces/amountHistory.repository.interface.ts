@@ -1,7 +1,4 @@
-import {
-  AmountHistoryModel,
-  AmountHistoryState,
-} from '@app/domain/models/amountHistory.model';
+import { AmountHistoryModel } from '@app/domain/models/amountHistory.model';
 
 export const amountHistoryRepositorySymbol = Symbol.for(
   'AmountHistoryRepository',

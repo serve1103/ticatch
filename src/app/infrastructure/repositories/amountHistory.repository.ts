@@ -4,9 +4,9 @@ import {
   AmountHistoryState,
 } from '@app/domain/models/amountHistory.model';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserAmountHistory } from '../entities/userAmountHistory.entity';
+import { UserAmountHistory } from '@app/infrastructure/entities/userAmountHistory.entity';
 import { Repository } from 'typeorm';
-import { AmountHistoryMapper } from '../mappers/amountHistory.mapper.e2m';
+import { AmountHistoryMapper } from '@app/infrastructure/mappers/amountHistory.mapper.e2m';
 
 export class AmountHistoryRepositoryimpl implements AmountHistoryRepository {
   constructor(

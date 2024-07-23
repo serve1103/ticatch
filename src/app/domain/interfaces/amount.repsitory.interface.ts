@@ -1,5 +1,5 @@
 import { EntityManager } from 'typeorm';
-import { AmountModel } from '../models/amount.model';
+import { AmountModel } from '@app/domain/models/amount.model';
 
 export const amountRepositorySymbol = Symbol.for('AmountRepository');
 

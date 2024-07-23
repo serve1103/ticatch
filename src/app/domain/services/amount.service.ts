@@ -14,10 +14,8 @@ export class AmountService {
   ) {}
 
   // 유저 금액 조회
-  async getUserAmount(amountModel: AmountModel) {
-    const userInfo = await this.amountRepository.findByUserId(
-      amountModel.userId,
-    );
+  async getUserAmount(userId: string) {
+    const userInfo = await this.amountRepository.findByUserId(userId);
 
     if (!userInfo) throw new Error('존재하지 않는 유저입니다.');
 

@@ -2,10 +2,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import {
   AmountHistoryModel,
   AmountHistoryState,
-} from '../models/amountHistory.model';
-import { amountRepositorySymbol } from '../interfaces/amount.repsitory.interface';
-import { AmountHistoryRepository } from '../interfaces/amountHistory.repository.interface';
-import { AmountModel } from '../models/amount.model';
+} from '@app/domain/models/amountHistory.model';
+import { amountRepositorySymbol } from '@app/domain/interfaces/amount.repsitory.interface';
+import { AmountHistoryRepository } from '@app/domain/interfaces/amountHistory.repository.interface';
+import { AmountModel } from '@app/domain/models/amount.model';
 
 @Injectable()
 export class AmountHistoryService {
