@@ -28,7 +28,7 @@ export class ConcertRepositoryImpl implements ConcertRepository {
   ) {}
 
   // 콘서트 전체 조회
-  async findAllOrConcertId(concertId: number): Promise<ConcertModel[]> {
+  async findAllOrConcertId(concertId?: number): Promise<ConcertModel[]> {
     let concerts = null;
     if (!concertId) {
       // 모든 콘서트를 조회
@@ -55,7 +55,9 @@ export class ConcertRepositoryImpl implements ConcertRepository {
   // 특정 콘서트 조회
   async findSeatsByDate(
     concertOptionsId: number,
-  ): Promise<ConcertOptionsModel[]> {
+  ): Promise<
+    { concertOption: ConcertOptionsModel; rooms: ConcertOptionsRoomModel[] }[]
+  > {
     // 오늘 날짜 불러오기
     const today = new Date();
 
@@ -71,19 +73,22 @@ export class ConcertRepositoryImpl implements ConcertRepository {
       throw new Error('Concert options not found for the given date');
     }
 
-    // 각 콘서트 옵션에 대한 좌석 정보 조회
-    const concertOptionsRooms = await Promise.all(
+    // 각 콘서트 옵션에 대한 좌석 정보 조회 및 매핑
+    const result = await Promise.all(
       concertOptions.map(async (option) => {
         const rooms = await this.concertOptionsRoomRepository.find({
           where: { concertOptionsId: option.idx },
         });
-        return rooms.map((room) =>
+        const mappedRooms = rooms.map((room) =>
           ConcertOptionsMapper.toOptionsRoomModel(room),
         );
+        return {
+          concertOption: ConcertOptionsMapper.toOptionsModel(option),
+          rooms: mappedRooms,
+        };
       }),
     );
 
-    // 다차원 배열을 1차원 배열로 변환
-    return concertOptionsRooms.flat();
+    return result;
   }
 }

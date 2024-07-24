@@ -1,34 +1,30 @@
-import { Injectable } from '@nestjs/common';
-import { ConcertRepository } from '@app/domain/interfaces/concert.repository.interface';
+import { Inject, Injectable } from '@nestjs/common';
+import {
+  ConcertRepository,
+  concertRepositorySymbol,
+} from '@app/domain/interfaces/concert.repository.interface';
 import {
   ConcertModel,
   ConcertOptionsModel,
   ConcertOptionsRoomModel,
 } from '@app/domain/models/concert.model';
-import { ConcertOptionsRepository } from '@app/domain/interfaces/concertOptions.repository.interface';
-import { ConcertOptionsRoomRepository } from '@app/domain/interfaces/concertOptionsRoom.repository.interface';
 
 @Injectable()
 export class ConcertService {
   constructor(
+    @Inject(concertRepositorySymbol)
     private readonly concertRepository: ConcertRepository,
-    private readonly concertOptionsRepository: ConcertOptionsRepository,
-    private readonly concertOptionsRoomRepository: ConcertOptionsRoomRepository,
   ) {}
 
-  async getConcertAll(): Promise<ConcertModel[]> {
-    return await this.concertRepository.findAll();
+  async getConcertAll(concertId?: number): Promise<ConcertModel[]> {
+    return await this.concertRepository.findAllOrConcertId(concertId);
   }
 
-  async getAvailableDates(): Promise<string[]> {
-    return await this.concertRepository.findAllDates();
-  }
-
-  async getAvailableSeats(date: string): Promise<string[]> {
-    return await this.concertRepository.findSeatsByDate(date);
-  }
-
-  async updateSeats(date: string, seats: string[]): Promise<ConcertModel> {
-    return await this.concertRepository.updateSeats(date, seats);
+  async getAvailableSeats(
+    concertOptionsId: number,
+  ): Promise<
+    { concertOption: ConcertOptionsModel; rooms: ConcertOptionsRoomModel[] }[]
+  > {
+    return await this.concertRepository.findSeatsByDate(concertOptionsId);
   }
 }
