@@ -19,13 +19,14 @@ export class UserInfoRepositoryImpl implements UserInfoRepository {
     position: number,
     estimatedWaitTime: number,
   ): Promise<UserInfoModel> {
-    const userInfo = this.userInfoRepository.create({
-      userId,
-      token,
-      position,
-      estimatedWaitTime,
-    });
-    return await this.userInfoRepository.save(UserMapper.toEntity(userInfo));
+    // const userInfo = this.userInfoRepository.create({
+    //   userId,
+    //   token,
+    //   position,
+    //   estimatedWaitTime,
+    // });
+    // return await this.userInfoRepository.save(UserMapper.toEntity(userInfo));
+    return;
   }
 
   async findByToken(token: string): Promise<UserInfoModel | undefined> {
