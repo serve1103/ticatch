@@ -9,5 +9,17 @@ export class UserWaitQueue {
   userId: string;
 
   @Column()
-  state: 'WAITING' | 'USING' | 'DONE';
+  state: QueueState;
+
+  @Column()
+  createdAt: Date;
+
+  @Column()
+  expiredAt: Date;
+}
+
+export enum QueueState {
+  WAITING = 'WAITING',
+  USING = 'USING',
+  DONE = 'DONE',
 }

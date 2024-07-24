@@ -30,7 +30,8 @@ export class UserInfoRepositoryImpl implements UserInfoRepository {
   }
 
   async findByToken(token: string): Promise<UserInfoModel | undefined> {
-    return await this.userInfoRepository.findOne({ where: { token } });
+    // return await this.userInfoRepository.findOne({ where: { token } });
+    return;
   }
 
   async countAll(): Promise<number> {

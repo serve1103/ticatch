@@ -1,36 +1,67 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { ConcertUseCase } from '@app/application/concert.use-case';
+import { ApiOperation, ApiTags, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import {
-  ConcertModel,
-  ConcertOptionsModel,
-  ConcertOptionsRoomModel,
-} from '@app/domain/models/concert.model';
+  AvailableSeatsResponseDto,
+  ConcertDetailsDto,
+  ConcertResponseDto,
+} from './dto/concert.response';
 
+@ApiTags('콘서트 관리')
 @Controller('concerts')
 export class ConcertController {
   constructor(private readonly concertUseCase: ConcertUseCase) {}
 
-  // 전체 콘서트 조회
+  @ApiOperation({ summary: '전체 콘서트 조회' })
+  @ApiResponse({
+    status: 200,
+    description: '성공적으로 콘서트를 조회했습니다.',
+    type: ConcertResponseDto,
+    isArray: true,
+  })
   @Get()
-  async getConcertAll(): Promise<ConcertModel[]> {
-    return await this.concertUseCase.getConcertAll();
+  async getConcertAll(): Promise<ConcertResponseDto[]> {
+    const concerts = await this.concertUseCase.getConcertAll();
+    return concerts.map((concert) => new ConcertResponseDto(concert));
   }
 
-  // 특정 콘서트 일자 조회
-  @Get(':concertId')
+  @ApiOperation({ summary: '특정 콘서트 조회' })
+  @ApiQuery({
+    name: 'concertId',
+    description: '조회할 콘서트의 ID',
+    type: Number,
+  })
+  @ApiResponse({
+    status: 200,
+    description: '성공적으로 특정 콘서트를 조회했습니다.',
+    type: ConcertDetailsDto,
+  })
+  @Get('details')
   async getConcertById(
-    @Param('concertId') concertId: number,
-  ): Promise<ConcertModel[]> {
-    return await this.concertUseCase.getConcertById(concertId);
+    @Query('concertId') concertId: number,
+  ): Promise<ConcertDetailsDto[]> {
+    const concerts = await this.concertUseCase.getConcertById(concertId);
+    return concerts.map((concert) => new ConcertDetailsDto(concert));
   }
 
-  // 특정 콘서트 특정 일자 예약가능 좌석 조회
-  @Get(':concertId/seats')
+  @ApiOperation({ summary: '특정 콘서트의 특정 일자 예약 가능 좌석 조회' })
+  @ApiQuery({
+    name: 'concertId',
+    description: '콘서트 옵션의 ID',
+    type: Number,
+  })
+  @ApiResponse({
+    status: 200,
+    description: '성공적으로 예약 가능 좌석을 조회했습니다.',
+    type: AvailableSeatsResponseDto,
+    isArray: true,
+  })
+  @Get('available-seats')
   async getAvailableSeats(
-    @Param('concertId') concertOptionsId: number,
-  ): Promise<
-    { concertOption: ConcertOptionsModel; rooms: ConcertOptionsRoomModel[] }[]
-  > {
-    return await this.concertUseCase.getAvailableSeats(concertOptionsId);
+    @Query('concertId') concertOptionsId: number,
+  ): Promise<AvailableSeatsResponseDto[]> {
+    const availableSeats =
+      await this.concertUseCase.getAvailableSeats(concertOptionsId);
+    return availableSeats.map((seat) => new AvailableSeatsResponseDto(seat));
   }
 }

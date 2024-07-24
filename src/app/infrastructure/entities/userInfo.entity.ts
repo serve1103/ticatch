@@ -5,19 +5,16 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity('UserInfo')
 export class UserInfo {
-  @PrimaryGeneratedColumn('uuid')
-  token: string;
+  @PrimaryGeneratedColumn()
+  idx: number;
 
   @Column()
   userId: string;
 
   @Column()
-  position: number;
-
-  @Column()
-  estimatedWaitTime: number;
+  userName: string;
 
   @CreateDateColumn()
   createdAt: Date;
