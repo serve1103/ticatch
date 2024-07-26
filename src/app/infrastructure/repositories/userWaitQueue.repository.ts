@@ -11,13 +11,20 @@ export class UserWaitQueueRepositoryImpl implements UserWaitQueueRepository {
     @InjectRepository(UserWaitQueue)
     private readonly userWaitQueueRepository: Repository<UserWaitQueue>,
   ) {}
-  save(
+  async save(
     userWaitQueue: UserWaitQueueModel,
     entityManager: EntityManager,
   ): Promise<UserWaitQueueModel> {
-    return;
+    const manager = entityManager ?? this.userWaitQueueRepository.manager;
+    const entity = await manager.save(userWaitQueue);
+    return entity;
   }
-  findByUserId(userId: string): Promise<UserWaitQueueModel> {
-    return;
+
+  async findByUserId(userId: string): Promise<UserWaitQueueModel> {
+    const entity = await this.userWaitQueueRepository.findOne({
+      where: { userId },
+    });
+
+    return entity;
   }
 }

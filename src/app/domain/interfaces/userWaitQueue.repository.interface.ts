@@ -1,5 +1,7 @@
 import { EntityManager } from 'typeorm';
-import { UserWaitQueueModel } from '../models/userWaitQueue.model';
+import { UserWaitQueueModel } from '@app/domain/models/userWaitQueue.model';
+
+export const userWaitQueueSymbol = Symbol.for('UserWaitQueueRepository');
 
 export interface UserWaitQueueRepository {
   save(
