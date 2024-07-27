@@ -13,7 +13,7 @@ export class UserWaitQueueRepositoryImpl implements UserWaitQueueRepository {
   ) {}
   async save(
     userWaitQueue: UserWaitQueueModel,
-    entityManager: EntityManager,
+    entityManager?: EntityManager,
   ): Promise<UserWaitQueueModel> {
     const manager = entityManager ?? this.userWaitQueueRepository.manager;
     const entity = await manager.save(userWaitQueue);

@@ -3,7 +3,10 @@ import {
   UserWaitQueueRepository,
   userWaitQueueSymbol,
 } from '@app/domain/interfaces/userWaitQueue.repository.interface';
-import { UserWaitQueueModel } from '../models/userWaitQueue.model';
+import {
+  QueueState,
+  UserWaitQueueModel,
+} from '@app/domain/models/userWaitQueue.model';
 
 @Injectable()
 export class UserWaitQueueService {
@@ -12,13 +15,16 @@ export class UserWaitQueueService {
     private readonly userWaitQueueRepository: UserWaitQueueRepository,
   ) {}
 
-  async setUserWaitQueue(
-    userWaitQueue: UserWaitQueueModel,
-  ): Promise<UserWaitQueueModel> {
-    return;
+  async setUserWaitQueue(userId: string): Promise<UserWaitQueueModel> {
+    const newQueue = new UserWaitQueueModel();
+    newQueue.userId = userId;
+    newQueue.state = QueueState.WAITING;
+
+    return await this.userWaitQueueRepository.save(newQueue);
   }
 
   async getUserWaitQueue(userId: string): Promise<UserWaitQueueModel> {
-    return;
+    const userQueue = await this.userWaitQueueRepository.findByUserId(userId);
+    return userQueue;
   }
 }

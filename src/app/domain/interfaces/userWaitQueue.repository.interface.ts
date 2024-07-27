@@ -6,7 +6,7 @@ export const userWaitQueueSymbol = Symbol.for('UserWaitQueueRepository');
 export interface UserWaitQueueRepository {
   save(
     userWaitQueue: UserWaitQueueModel,
-    entityManager: EntityManager,
+    entityManager?: EntityManager,
   ): Promise<UserWaitQueueModel>;
   findByUserId(userId: string): Promise<UserWaitQueueModel>;
 }
