@@ -1,10 +1,10 @@
 export class UserWaitQueueModel {
   constructor(
-    userId: string,
-    state: QueueState,
-    createdAt?: Date,
-    expiredAt?: Date,
-    id?: number,
+    public userId: string,
+    public state: QueueState,
+    public createdAt?: Date,
+    public expiredAt?: Date,
+    public id?: number,
   ) {}
 }
 

@@ -17,6 +17,7 @@ export class UserWaitQueueService {
   private readonly lockTimeout = 5000; // 5 seconds
   private readonly maxRetries = 5; // Maximum number of retries
   private readonly retryDelay = 1000; // Delay between retries in milliseconds
+  private readonly sysDate = new Date();
 
   constructor(
     @Inject(userWaitQueueSymbol)
@@ -67,13 +68,12 @@ export class UserWaitQueueService {
     await queryRunner.startTransaction();
 
     try {
-      const newQueue = new UserWaitQueueModel();
-      newQueue.userId = userId;
-      newQueue.state = QueueState.WAITING;
-      newQueue.createdAt = new Date();
-      newQueue.expiredAt = new Date(
-        newQueue.createdAt.getTime() + 60 * 60 * 1000,
-      ); // Set expiry to 1 hour later
+      const newQueue = new UserWaitQueueModel(
+        userId,
+        QueueState.WAITING,
+        this.sysDate,
+        new Date(this.sysDate.getTime() + 60 * 60 * 1000), // Set expiry to 1 hour later
+      );
 
       const savedQueue = await this.userWaitQueueRepository.save(
         newQueue,

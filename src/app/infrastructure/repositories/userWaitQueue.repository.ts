@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserWaitQueueRepository } from '@app/domain/interfaces/userWaitQueue.repository.interface';
 import { UserWaitQueue } from '@app/infrastructure/entities/userWaitQueue.entity';
 import { UserWaitQueueModel } from '@app/domain/models/userWaitQueue.model';
+import { InfrastructureMapper } from '@app/infrastructure/mappers/userWaitQueue.mapper';
 
 @Injectable()
 export class UserWaitQueueRepositoryImpl implements UserWaitQueueRepository {
@@ -11,13 +12,15 @@ export class UserWaitQueueRepositoryImpl implements UserWaitQueueRepository {
     @InjectRepository(UserWaitQueue)
     private readonly userWaitQueueRepository: Repository<UserWaitQueue>,
   ) {}
+
   async save(
     userWaitQueue: UserWaitQueueModel,
     entityManager?: EntityManager,
   ): Promise<UserWaitQueueModel> {
     const manager = entityManager ?? this.userWaitQueueRepository.manager;
-    const entity = await manager.save(userWaitQueue);
-    return entity;
+    const entity = InfrastructureMapper.toEntity(userWaitQueue);
+    const savedEntity = await manager.save(entity);
+    return InfrastructureMapper.toDomain(savedEntity);
   }
 
   async findByUserId(userId: string): Promise<UserWaitQueueModel> {
@@ -25,6 +28,6 @@ export class UserWaitQueueRepositoryImpl implements UserWaitQueueRepository {
       where: { userId },
     });
 
-    return entity;
+    return InfrastructureMapper.toDomain(entity);
   }
 }
