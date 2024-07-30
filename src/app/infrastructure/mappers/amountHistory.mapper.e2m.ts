@@ -24,7 +24,7 @@ export class AmountHistoryMapper {
     entity.userAmount = domain.userAmount;
     entity.Gubun = mapStateToGubun(domain.state);
 
-    return;
+    return entity;
   }
 }
 

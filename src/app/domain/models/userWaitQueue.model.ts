@@ -1,9 +1,11 @@
 export class UserWaitQueueModel {
-  userId: string;
-  state: QueueState;
-  createdAt?: Date;
-  expiredAt?: Date;
-  id?: number;
+  constructor(
+    userId: string,
+    state: QueueState,
+    createdAt?: Date,
+    expiredAt?: Date,
+    id?: number,
+  ) {}
 }
 
 export enum QueueState {
