@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConcertUseCase } from './concert.use-case';
-import { ConcertService } from '../domain/services/concert.service';
+import { ConcertUseCase } from '../../application/concert.use-case';
+import { ConcertService } from '../../domain/services/concert.service';
 
 describe('ConcertService', () => {
   let usecase: ConcertUseCase;
