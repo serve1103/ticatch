@@ -9,4 +9,5 @@ export interface UserWaitQueueRepository {
     entityManager?: EntityManager,
   ): Promise<UserWaitQueueModel>;
   findByUserId(userId: string): Promise<UserWaitQueueModel>;
+  findAll(): Promise<UserWaitQueueModel[]>;
 }

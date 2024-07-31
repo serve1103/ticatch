@@ -6,7 +6,15 @@ import { Injectable } from '@nestjs/common';
 export class UserWaitQueueUseCase {
   constructor(private readonly userWaitQueueService: UserWaitQueueService) {}
 
-  async createUserWaitQueue(userId: string): Promise<UserWaitQueueModel> {
+  async addToQueue(userId: string): Promise<UserWaitQueueModel> {
     return await this.userWaitQueueService.setUserWaitQueue(userId);
+  }
+
+  async getQueueStatus(userId: string) {
+    return this.userWaitQueueService.getUserWaitQueue(userId);
+  }
+
+  async getAllQueueStatus() {
+    return this.userWaitQueueService.getUserWaitQueueList();
   }
 }

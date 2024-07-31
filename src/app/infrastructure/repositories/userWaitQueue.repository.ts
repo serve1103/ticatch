@@ -30,4 +30,10 @@ export class UserWaitQueueRepositoryImpl implements UserWaitQueueRepository {
 
     return InfrastructureMapper.toDomain(entity);
   }
+
+  async findAll(): Promise<UserWaitQueueModel[]> {
+    const entity = await this.userWaitQueueRepository.find();
+
+    return entity.map((item) => InfrastructureMapper.toDomain(item));
+  }
 }

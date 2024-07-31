@@ -9,7 +9,7 @@ import {
   UserWaitQueueModel,
 } from '@app/domain/models/userWaitQueue.model';
 import { RedisSymbol } from '@app/infrastructure/redis.module';
-import { EntityManager, DataSource } from 'typeorm';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class UserWaitQueueService {
@@ -93,5 +93,9 @@ export class UserWaitQueueService {
 
   async getUserWaitQueue(userId: string): Promise<UserWaitQueueModel> {
     return await this.userWaitQueueRepository.findByUserId(userId);
+  }
+
+  async getUserWaitQueueList(): Promise<UserWaitQueueModel[]> {
+    return await this.userWaitQueueRepository.findAll();
   }
 }
