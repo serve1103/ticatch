@@ -8,6 +8,7 @@ import { UserWaitQueueService } from '@app/domain/services/userWaitQueue.service
 import { userWaitQueueSymbol } from '@app/domain/interfaces/userWaitQueue.repository.interface';
 import { UserWaitQueueRepositoryImpl } from '@app/infrastructure/repositories/userWaitQueue.repository';
 import { UserInfoModule } from '@app/userInfo.module';
+import { RedisService } from '@app/infrastructure/redis.service';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UserInfoModule } from '@app/userInfo.module';
   providers: [
     UserWaitQueueUseCase,
     UserWaitQueueService,
+    RedisService,
     {
       provide: userWaitQueueSymbol,
       useClass: UserWaitQueueRepositoryImpl,

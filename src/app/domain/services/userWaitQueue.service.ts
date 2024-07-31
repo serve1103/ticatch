@@ -10,99 +10,63 @@ import {
 } from '@app/domain/models/userWaitQueue.model';
 import { RedisSymbol } from '@app/infrastructure/redis.module';
 import { DataSource } from 'typeorm';
+import { RedisService } from '@app/infrastructure/redis.service';
 
 @Injectable()
 export class UserWaitQueueService {
-  private readonly lockKey = 'user-wait-queue-lock';
+  private readonly lockKey = 'user_queue_lock';
   private readonly lockTimeout = 5000; // 5 seconds
-  private readonly maxRetries = 5; // Maximum number of retries
-  private readonly retryDelay = 1000; // Delay between retries in milliseconds
-  private readonly sysDate = new Date();
 
-  constructor(
-    @Inject(userWaitQueueSymbol)
-    private readonly userWaitQueueRepository: UserWaitQueueRepository,
-    @Inject(RedisSymbol)
-    private readonly redis: Redis,
-    private readonly dataSource: DataSource,
-  ) {}
-
-  private async acquireLock(): Promise<boolean> {
-    const result = await this.redis.set(
-      this.lockKey,
-      'locked',
-      'PX',
-      this.lockTimeout,
-      'NX',
-    );
-    return result === 'OK';
-  }
-
-  private async releaseLock(): Promise<void> {
-    await this.redis.del(this.lockKey);
-  }
-
-  private async retryLockAcquire(retries: number): Promise<boolean> {
-    while (retries > 0) {
-      if (await this.acquireLock()) {
-        return true;
-      }
-      retries--;
-      await this.delay(this.retryDelay);
-    }
-    return false;
-  }
-
-  private delay(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
+  constructor(private readonly redisService: RedisService) {}
 
   async setUserWaitQueue(userId: string): Promise<UserWaitQueueModel> {
-    const lockAcquired = await this.retryLockAcquire(this.maxRetries);
-    if (!lockAcquired) {
-      throw new Error('락 획득을 하지 못했습니다.');
-    }
-
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
-    try {
-      // 대기열에 부여된 유저인지 확인
-      const verifiedUser =
-        await this.userWaitQueueRepository.findByUserId(userId);
-
-      if (verifiedUser) throw new Error('이미 등록된 ID 입니다.');
-
-      const newQueue = new UserWaitQueueModel(
-        userId,
-        QueueState.WAITING,
-        this.sysDate,
-        new Date(this.sysDate.getTime() + 60 * 60 * 1000), // 만료시간 1시간
-      );
-
-      const savedQueue = await this.userWaitQueueRepository.save(
-        newQueue,
-        queryRunner.manager,
-      );
-
-      await queryRunner.commitTransaction();
-      await this.releaseLock();
-      return savedQueue;
-    } catch (error) {
-      await queryRunner.rollbackTransaction();
-      await this.releaseLock();
-      throw error;
-    } finally {
-      await queryRunner.release();
-    }
+    const createdAt = new Date();
+    const userQueue = new UserWaitQueueModel(
+      userId,
+      QueueState.WAITING,
+      createdAt,
+    );
+    await this.redisService.addWaitingUser(userQueue);
+    return userQueue;
   }
 
   async getUserWaitQueue(userId: string): Promise<UserWaitQueueModel> {
-    return await this.userWaitQueueRepository.findByUserId(userId);
+    const users = await this.redisService.getWaitingUsers(-Infinity, Infinity);
+    return users.find((u) => u.userId === userId);
   }
 
   async getUserWaitQueueList(): Promise<UserWaitQueueModel[]> {
-    return await this.userWaitQueueRepository.findAll();
+    return await this.redisService.getWaitingUsers(-Infinity, Infinity);
+  }
+
+  async activateUsers(): Promise<void> {
+    const currentTime = Date.now();
+
+    let lockAcquired = await this.redisService.acquireLock(
+      this.lockKey,
+      this.lockTimeout,
+    );
+    while (!lockAcquired) {
+      await new Promise((resolve) => setTimeout(resolve, 100)); // Retry every 100ms
+      lockAcquired = await this.redisService.acquireLock(
+        this.lockKey,
+        this.lockTimeout,
+      );
+    }
+
+    try {
+      const waitingUsers = await this.redisService.getWaitingUsers(
+        -Infinity,
+        currentTime,
+      );
+      for (const userQueue of waitingUsers) {
+        await this.redisService.removeWaitingUser(userQueue.userId);
+        userQueue.state = QueueState.USING;
+        userQueue.expiredAt = new Date(currentTime + 60 * 60 * 1000); // 1 hour expiry as Date object
+        await this.redisService.addActiveUser(userQueue);
+      }
+    } finally {
+      await this.redisService.releaseLock(this.lockKey);
+    }
   }
 }
