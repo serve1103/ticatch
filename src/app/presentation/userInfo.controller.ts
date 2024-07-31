@@ -4,7 +4,7 @@ import { UserUseCase } from '../application/user.use-case';
 import {
   UpdateUserRequest,
   UserIdRequest,
-  UserInfoRequest,
+  UserInfoRequestDto,
 } from '@app/presentation/dto/user.request.dto';
 import { UserResponseDto } from '@app/presentation/dto/user.response.dto';
 
@@ -12,6 +12,15 @@ import { UserResponseDto } from '@app/presentation/dto/user.response.dto';
 @Controller('userInfo')
 export class UserInfoController {
   constructor(private readonly userUseCase: UserUseCase) {}
+
+  @ApiOperation({ summary: '유저생성' })
+  @Post('/setUserInfo')
+  async setUserInfo(
+    @Body() userInfoRequest: UserInfoRequestDto,
+  ): Promise<UserResponseDto> {
+    const entity = await this.userUseCase.executeByUser(userInfoRequest);
+    return;
+  }
 
   /* 로그인 기능 생략
     // 특정 유저 정보 조회

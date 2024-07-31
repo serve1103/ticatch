@@ -13,6 +13,7 @@ import { userInfoRepositorySymbol } from './domain/interfaces/userInfo.repsitory
   providers: [
     UserInfoService,
     UserUseCase,
+    UserInfoModule,
     {
       provide: userInfoRepositorySymbol,
       useClass: UserInfoRepositoryImpl,

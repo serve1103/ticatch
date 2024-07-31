@@ -11,4 +11,6 @@ export interface UserInfoRepository {
   ): Promise<UserInfoModel>;
   findByToken(token: string): Promise<UserInfoModel | undefined>;
   countAll(): Promise<number>;
+  findByUserId(userId: string): Promise<UserInfoModel>;
+  setUserInfo(userInfo: UserInfoModel): Promise<UserInfoModel>;
 }

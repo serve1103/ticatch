@@ -13,6 +13,21 @@ export class UserInfoRepositoryImpl implements UserInfoRepository {
     private readonly userInfoRepository: Repository<UserInfo>,
   ) {}
 
+  async findByUserId(userId: string): Promise<UserInfoModel> {
+    return await this.userInfoRepository.findOne({ where: { userId } });
+  }
+
+  async setUserInfo(userInfo: UserInfoModel): Promise<UserInfoModel> {
+    const verifiedUser = await this.userInfoRepository.findOne({
+      where: { userId: userInfo.userId },
+    });
+
+    if (verifiedUser) throw new Error('이미 등록된 유저 입니다.');
+
+    const savedUser = await this.userInfoRepository.save(userInfo);
+    return savedUser;
+  }
+
   async createToken(
     userId: string,
     token: string,

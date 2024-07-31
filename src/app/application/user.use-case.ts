@@ -3,14 +3,19 @@ import { UserInfoService } from '@app/domain/services/userInfo.service';
 import {
   UpdateUserRequest,
   UserIdRequest,
-  UserInfoRequest,
 } from '@app/presentation/dto/user.request.dto';
 import { UserResponseDto } from '@app/presentation/dto/user.response.dto';
 import { UserMapper } from '@app/presentation/mappers/user.mapper.d2m';
+import { UserInfoModel } from '@app/domain/models/userInfo.model';
 
 @Injectable()
 export class UserUseCase {
   constructor(private readonly userInfoService: UserInfoService) {}
+
+  async executeByUser(userInfo: UserInfoModel): Promise<UserInfoModel> {
+    const savedUser = await this.userInfoService.setUser(userInfo);
+    return savedUser;
+  }
 
   // async searchAll(): Promise<UserResponseDto[]> {
   //   const users = await this.userInfoService.getUserInfoList();

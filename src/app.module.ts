@@ -14,8 +14,8 @@ import { DatabaseModule } from '@app/infrastructure/database.module';
     AuthModule,
     AmountModule,
     PaymentModule,
+    UserInfoModule,
     UserWaitQueueModule,
-    // UserInfoModule,
     DatabaseModule,
   ],
 })

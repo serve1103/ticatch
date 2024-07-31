@@ -1,10 +1,9 @@
 export class UserInfoModel {
   constructor(
-    public token: string,
     public userId: string,
-    public position: number,
-    public estimatedWaitTime: number,
-    createdAt: Date,
+    public userName: string,
+    public createdAt: Date,
+    public idx?: number,
   ) {}
 
   static create(userInfo: UserInfoModel): UserInfoModel {

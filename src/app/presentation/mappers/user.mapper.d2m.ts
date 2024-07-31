@@ -3,10 +3,17 @@ import { UserResponseDto } from '@app/presentation/dto/user.response.dto';
 import {
   UpdateUserRequest,
   UserIdRequest,
-  UserInfoRequest,
+  UserInfoRequestDto,
 } from '@app/presentation/dto/user.request.dto';
 
 export class UserMapper {
+  static toRequest(domain: UserInfoModel): UserInfoRequestDto {
+    return new UserInfoRequestDto(
+      domain.userId,
+      domain.userName,
+      domain.createdAt,
+    );
+  }
   // static toResponseDto(domain: UserInfoModel): UserResponseDto {
   //   return new UserResponseDto(domain.id, domain.name, domain.email);
   // }
