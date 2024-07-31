@@ -1,11 +1,11 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { ConcertUseCase } from '@app/application/concert.use-case';
 import { ApiOperation, ApiTags, ApiQuery, ApiResponse } from '@nestjs/swagger';
+import { ConcertUseCase } from '@app/application/concert.use-case';
 import {
   AvailableSeatsResponseDto,
   ConcertDetailsDto,
   ConcertResponseDto,
-} from './dto/concert.response';
+} from '@app/presentation/dto/concert.response';
 
 @ApiTags('콘서트 관리')
 @Controller('concerts')

@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { UserUseCase } from '../application/user.use-case';
+import { UserUseCase } from '@app/application/user.use-case';
 import {
   UpdateUserRequest,
   UserIdRequest,

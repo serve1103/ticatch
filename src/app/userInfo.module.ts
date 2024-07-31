@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserInfoController } from './presentation/userInfo.controller';
-import { UserUseCase } from './application/user.use-case';
-import { UserInfoService } from './domain/services/userInfo.service';
-import { UserInfoRepositoryImpl } from './infrastructure/repositories/userInfo.repository';
-import { UserInfo } from './infrastructure/entities/userInfo.entity';
-import { userInfoRepositorySymbol } from './domain/interfaces/userInfo.repsitory.interface';
+import { UserInfoController } from '@app/presentation/userInfo.controller';
+import { UserUseCase } from '@app/application/user.use-case';
+import { UserInfoService } from '@app/domain/services/userInfo.service';
+import { UserInfoRepositoryImpl } from '@app/infrastructure/repositories/userInfo.repository';
+import { UserInfo } from '@app/infrastructure/entities/userInfo.entity';
+import { userInfoRepositorySymbol } from '@app/domain/interfaces/userInfo.repsitory.interface';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserInfo])],
