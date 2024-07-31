@@ -7,9 +7,14 @@ import { UserWaitQueueUseCase } from '@app/application/userWaitQueue.use-case';
 import { UserWaitQueueService } from '@app/domain/services/userWaitQueue.service';
 import { userWaitQueueSymbol } from '@app/domain/interfaces/userWaitQueue.repository.interface';
 import { UserWaitQueueRepositoryImpl } from './infrastructure/repositories/userWaitQueue.repository';
+import { UserInfoModule } from './userInfo.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserWaitQueue]), RedisModule],
+  imports: [
+    TypeOrmModule.forFeature([UserWaitQueue]),
+    RedisModule,
+    UserInfoModule,
+  ],
   controllers: [UserWaitQueueController],
   providers: [
     UserWaitQueueUseCase,

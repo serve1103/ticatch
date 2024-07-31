@@ -60,7 +60,7 @@ export class UserWaitQueueService {
   async setUserWaitQueue(userId: string): Promise<UserWaitQueueModel> {
     const lockAcquired = await this.retryLockAcquire(this.maxRetries);
     if (!lockAcquired) {
-      throw new Error('Could not acquire lock after multiple retries');
+      throw new Error('락 획득을 하지 못했습니다.');
     }
 
     const queryRunner = this.dataSource.createQueryRunner();
@@ -68,17 +68,24 @@ export class UserWaitQueueService {
     await queryRunner.startTransaction();
 
     try {
+      // 대기열에 부여된 유저인지 확인
+      const verifiedUser =
+        await this.userWaitQueueRepository.findByUserId(userId);
+
+      if (verifiedUser) throw new Error('이미 등록된 ID 입니다.');
+
       const newQueue = new UserWaitQueueModel(
         userId,
         QueueState.WAITING,
         this.sysDate,
-        new Date(this.sysDate.getTime() + 60 * 60 * 1000), // Set expiry to 1 hour later
+        new Date(this.sysDate.getTime() + 60 * 60 * 1000), // 만료시간 1시간
       );
 
       const savedQueue = await this.userWaitQueueRepository.save(
         newQueue,
         queryRunner.manager,
       );
+
       await queryRunner.commitTransaction();
       await this.releaseLock();
       return savedQueue;
