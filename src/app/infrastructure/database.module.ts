@@ -1,21 +1,53 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module, OnModuleInit } from '@nestjs/common';
+import { TypeOrmModule, InjectDataSource } from '@nestjs/typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
+
+enum DataBaseName {
+  MASTER = 'master',
+  USING = 'ticatch',
+}
+
+const initialDataSourceOptions: DataSourceOptions = {
+  type: 'mssql',
+  host: 'localhost',
+  port: 1430,
+  username: 'sa',
+  password: '1q2w3e4r!',
+  database: DataBaseName.MASTER,
+  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+  synchronize: true,
+  extra: {
+    trustServerCertificate: true,
+  },
+};
+
+const finalDataSourceOptions: DataSourceOptions = {
+  ...initialDataSourceOptions,
+  database: DataBaseName.USING,
+};
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'mssql', // 데이터베이스 유형
-      host: 'localhost', // 데이터베이스 호스트
-      port: 1433, // 데이터베이스 포트
-      username: 'SA', // 데이터베이스 사용자 이름
-      password: 'A!123456789', // 데이터베이스 비밀번호
-      database: 'test', // 데이터베이스 이름
-      entities: [__dirname + '/../**/*.entity{.ts,.js}'], // 엔터티 경로
-      synchronize: true, // 개발 환경에서만 사용. 프로덕션 환경에서는 false로 설정
-      extra: {
-        trustServerCertificate: true,
-      },
-    }),
-  ],
+  imports: [TypeOrmModule.forRoot(initialDataSourceOptions)],
 })
-export class DatabaseModule {}
+export class DatabaseModule implements OnModuleInit {
+  constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
+
+  async onModuleInit() {
+    await this.createDatabase();
+    await this.reconnect();
+  }
+
+  private async createDatabase() {
+    // 데이터베이스가 없을 경우 생성
+    await this.dataSource.query(
+      `IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = '${DataBaseName.USING}') CREATE DATABASE ${DataBaseName.USING}`,
+    );
+  }
+
+  private async reconnect() {
+    await this.dataSource.destroy(); // 기존 연결 닫기
+
+    const newDataSource = new DataSource(finalDataSourceOptions);
+    await newDataSource.initialize();
+  }
+}

@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    user: root
+    container_name: mssql
+    hostname: localhost
+    ports:
+      - '1430:1433'
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=1q2w3e4r!
+    restart: always
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 1q2w3e4r! -Q 'SELECT 1' || exit 1",
+        ]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+
+  redis:
+    image: redis:latest
+    container_name: redis1
+    ports:
+      - '6379:6379'
