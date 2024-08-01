@@ -19,6 +19,20 @@ export class UserWaitQueueService {
       QueueState.WAITING,
       createdAt,
     );
+
+    const existingUsers = await this.redisService.getWaitingUsers(
+      0,
+      Date.now(),
+    );
+
+    const userExists = existingUsers.some(
+      (user) => user.userId === userQueue.userId,
+    );
+
+    if (userExists) {
+      throw new Error('이미 등록된 유저입니다.');
+    }
+
     await this.redisService.addWaitingUser(userQueue);
     return userQueue;
   }
