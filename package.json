@@ -29,6 +29,8 @@
     "@sentry/nestjs": "^8.19.0",
     "@sentry/node": "^8.19.0",
     "@sentry/profiling-node": "^8.19.0",
+    "cache-manager": "^5.7.4",
+    "cache-manager-redis-store": "^3.0.1",
     "class-transformer": "^0.5.1",
     "ioredis": "^5.4.1",
     "mssql": "^10.0.4",
