@@ -8,6 +8,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Concert } from '@app/infrastructure/entities/concert.entity';
 import { ConcertOptions } from '@app/infrastructure/entities/concertOptions.entity';
 import { ConcertOptionsRoom } from '@app/infrastructure/entities/concertOptionsRoom.entity';
+import { concertCacheRepositorySymbol } from '@app/domain/interfaces/concert.cache.repository.interface';
+import { ConcertCacheRepositoryImpl } from '@app/infrastructure/repositories/concert.cache.repository';
 
 @Module({
   imports: [
@@ -20,6 +22,10 @@ import { ConcertOptionsRoom } from '@app/infrastructure/entities/concertOptionsR
     {
       provide: concertRepositorySymbol,
       useClass: ConcertRepositoryImpl,
+    },
+    {
+      provide: concertCacheRepositorySymbol,
+      useClass: ConcertCacheRepositoryImpl,
     },
   ],
 })
