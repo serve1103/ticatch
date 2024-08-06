@@ -38,9 +38,15 @@ export class ConcertResponseDto {
   @ApiProperty({ description: '콘서트 이름' })
   concertName: string;
 
+  @ApiProperty({ type: [ConcertOptionsDto], description: '콘서트 옵션 목록' })
+  options: ConcertOptionsDto[];
+
   constructor(concert: ConcertModel) {
     this.id = concert.id;
     this.concertName = concert.concertName;
+    this.options = concert.options.map(
+      (option) => new ConcertOptionsDto(option),
+    );
   }
 }
 

@@ -8,8 +8,10 @@ import {
   ConcertOptionsModel,
   ConcertOptionsRoomModel,
 } from '@app/domain/models/concert.model';
-import { concertCacheRepositorySymbol } from '@app/domain/interfaces/concert.cache.repository.interface';
-import { ConcertCacheRepositoryImpl } from '@app/infrastructure/repositories/concert.cache.repository';
+import {
+  ConcertCacheRepository,
+  concertCacheRepositorySymbol,
+} from '@app/domain/interfaces/concert.cache.repository.interface';
 
 @Injectable()
 export class ConcertService {
@@ -17,7 +19,7 @@ export class ConcertService {
     @Inject(concertRepositorySymbol)
     private readonly concertRepository: ConcertRepository,
     @Inject(concertCacheRepositorySymbol)
-    private readonly concertCacheRepository: ConcertCacheRepositoryImpl,
+    private readonly concertCacheRepository: ConcertCacheRepository,
   ) {}
 
   async getConcertAll(concertId?: number): Promise<ConcertModel[]> {
