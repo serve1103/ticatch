@@ -14,8 +14,8 @@ const initialDataSourceOptions: DataSourceOptions = {
   username: 'sa',
   password: '1q2w3e4r!',
   database: DataBaseName.MASTER,
-  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   synchronize: true,
+  logging: true,
   extra: {
     trustServerCertificate: true,
   },
@@ -24,6 +24,7 @@ const initialDataSourceOptions: DataSourceOptions = {
 const finalDataSourceOptions: DataSourceOptions = {
   ...initialDataSourceOptions,
   database: DataBaseName.USING,
+  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
 };
 
 @Module({
@@ -38,16 +39,22 @@ export class DatabaseModule implements OnModuleInit {
   }
 
   private async createDatabase() {
-    // 데이터베이스가 없을 경우 생성
     await this.dataSource.query(
       `IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = '${DataBaseName.USING}') CREATE DATABASE ${DataBaseName.USING}`,
     );
   }
 
   private async reconnect() {
-    await this.dataSource.destroy(); // 기존 연결 닫기
+    await this.dataSource.destroy();
 
     const newDataSource = new DataSource(finalDataSourceOptions);
     await newDataSource.initialize();
+
+    this.overrideDataSource(newDataSource);
+  }
+
+  private overrideDataSource(newDataSource: DataSource) {
+    // Overriding the dataSource in the module
+    Object.assign(this.dataSource, newDataSource);
   }
 }
