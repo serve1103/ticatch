@@ -29,6 +29,7 @@ export class ConcertService {
 
     // 캐시 조회
     const getCache = await this.concertCacheRepository.findById(concertId);
+    console.log('getCache : ', getCache);
 
     // 캐시 유 -> 캐시 반환
     if (getCache) return getCache;
@@ -37,10 +38,12 @@ export class ConcertService {
     const concertOptions =
       await this.concertRepository.findAllOrConcertId(concertId);
 
-    await this.concertCacheRepository.setCacheConcert(
+    const cache = await this.concertCacheRepository.setCacheConcert(
       concertId,
       concertOptions,
     );
+
+    console.log('cache: ', cache);
 
     // 조회 데이터 반환
     return concertOptions;

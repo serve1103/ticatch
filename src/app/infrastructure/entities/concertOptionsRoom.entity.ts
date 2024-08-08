@@ -14,10 +14,10 @@ export class ConcertOptionsRoom {
   @Column()
   concertRoomPrice: number;
 
-  @Column()
+  @Column({ nullable: true })
   userId: string;
 
-  @Column()
+  @Column({ nullable: true })
   state: ConcertRoomState;
 
   @VersionColumn()

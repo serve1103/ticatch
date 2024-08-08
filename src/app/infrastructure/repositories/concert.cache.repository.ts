@@ -20,11 +20,12 @@ export class ConcertCacheRepositoryImpl implements ConcertCacheRepository {
   }
 
   async setCacheConcert(concertId: number, concertModels: ConcertModel[]) {
-    this.redis.set(
+    console.log('cache??', JSON.stringify(concertModels));
+    await this.redis.set(
       `options-${concertId}`,
       JSON.stringify(concertModels),
       'PX',
-      360,
+      36000,
       'NX',
     );
   }

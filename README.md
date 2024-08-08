@@ -13,6 +13,67 @@
 API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요합니다.
 
 <details>
+  <summary><span style="font-size: 1.5em;">시나리오 Query 분석 및 Index 설계</span></summary>
+  
+  ![ticatch_조회_데이터.png](src/asset/ticatch_조회_데이터.png)
+
+#### 각 테이블 별 데이터 raw 수
+
+- 콘서트 : 100k
+- 콘서트 상세정보 : 500k
+- 콘서트 좌석정보 : 약 19m
+
+#### 인덱스 설정 전 실행시간
+
+- 전체 콘서트 조회
+  - 1차 : ConcertFindTime: 2:59.348 (m:ss.mmm)
+  - 2차 : ConcertFindTime: 3:04.563 (m:ss.mmm)
+
+#### 인덱스 작업 범주 고민
+
+1. 조회 조건 파악
+
+   ```
+     .select([
+       'CD.concertIdx',
+       'CD.concertOpenedDate',
+       'CD.concertClosedDate',
+       'CD.concertMaxCapacity',
+       'CD.concertApplyCapacity',
+     ])
+     .where('CD.concertIdx IN (:...idx)', { idx: batchIds })
+     .andWhere('CD.concertOpenedDate >= :date', { date: today })
+     .getMany();
+   ```
+
+   - idx 와 열린 시간
+
+2. 실행계획 분석
+   ![ticatch_조회_실행계획.png](src/asset/ticatch_조회_실행계획.png)
+
+   - index Scan...?
+   - 그럼 인덱스를 거는 의미가 있나?
+
+3. index 설정
+
+   - 1차 인덱스 생성
+     ```
+       CREATE INDEX idx_concert_options ON ConcertOptions(concertIdx, concertOpenedDate);
+     ```
+     및 기존 인덱스 비활성화
+     ```
+       ALTER INDEX idx_concert_id ON Concert DISABLE;
+     ```
+
+#### 인덱스 설정 후 실행시간
+
+- 전체 콘서트 조회 : ConcertFindTime: 3:02.229 (m:ss.mmm)
+
+#### 결과
+
+</details>
+
+<details>
   <summary><span style="font-size: 1.5em;">캐시 전략 관련 보고서</span></summary>
 
 ### 캐시 전략 분석
