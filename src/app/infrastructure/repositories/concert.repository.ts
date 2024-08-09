@@ -70,7 +70,7 @@ export class ConcertRepositoryImpl implements ConcertRepository {
   async findAllOrConcertId(concertId?: number): Promise<ConcertModel[]> {
     console.time('ConcertFindTime');
     const today = new Date();
-    const queryBuilder = this.concertRepository
+    const queryBuilder = this.concertOptionsRepository
       .createQueryBuilder('concert')
       .innerJoinAndSelect(
         'ConcertOptions',
