@@ -76,6 +76,27 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
 </details>
 
 <details>
+  <summary><span style="font-size: 1.5em;">MSA 설계 및 트랜잭션 처리</span></summary>
+  
+#### MSA 설계
+
+##### 1. 기존 모듈들을 MSA로 설계한다면.
+- 유저 모듈
+- 대기열 모듈
+- 예약 모듈
+- 결제모듈
+- 콘서트 모듈
+##### 2. 각 모듈 별 트랜잭션이 물려있는 부분을 확인
+- 결제 모듈 + 유저(금액) + 대기열
+- 콘서트(인원) + 예약
+##### 3. CQRS Event 로 해당 트랜잭션에 Command 와 Handler 적용
+- 결제 관련 로직이 외부 API랑 통신한다고 가정
+- Event 관련 작업을 진행
+- 미비한 Payment 로직 추가 작업
+
+</details>
+
+<details>
   <summary><span style="font-size: 1.5em;">캐시 전략 관련 보고서</span></summary>
 
 ### 캐시 전략 분석
