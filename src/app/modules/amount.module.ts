@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AmountController } from '@app/presentation/amount.controller';
 import { AmountService } from '@app/domain/services/amount.service';
 import { UserAmountUseCase } from '@app/application/amount.use-case';
@@ -7,7 +8,6 @@ import { amountRepositorySymbol } from '@app/domain/interfaces/amount.repsitory.
 import { AmountHistoryService } from '@app/domain/services/amountHistory.service';
 import { amountHistoryRepositorySymbol } from '@app/domain/interfaces/amountHistory.repository.interface';
 import { AmountHistoryRepositoryimpl } from '@app/infrastructure/repositories/amountHistory.repository';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserAmount } from '@app/infrastructure/entities/userAmount.entity';
 import { UserAmountHistory } from '@app/infrastructure/entities/userAmountHistory.entity';
 

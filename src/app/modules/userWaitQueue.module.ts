@@ -7,7 +7,7 @@ import { UserWaitQueueUseCase } from '@app/application/userWaitQueue.use-case';
 import { UserWaitQueueService } from '@app/domain/services/userWaitQueue.service';
 import { userWaitQueueSymbol } from '@app/domain/interfaces/userWaitQueue.repository.interface';
 import { UserWaitQueueRepositoryImpl } from '@app/infrastructure/repositories/userWaitQueue.repository';
-import { UserInfoModule } from '@app/userInfo.module';
+import { UserInfoModule } from '@app/modules/userInfo.module';
 import { RedisService } from '@app/infrastructure/redis.client';
 
 @Module({
