@@ -3,7 +3,7 @@ import {
   QueueState,
   UserWaitQueueModel,
 } from '@app/domain/models/userWaitQueue.model';
-import { RedisService } from '@app/infrastructure/redis.client';
+import { RedisService } from '@app/infrastructure/redis/redis.client';
 
 @Injectable()
 export class UserWaitQueueService {

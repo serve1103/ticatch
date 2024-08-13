@@ -3,9 +3,9 @@ import {
   ConcertOptionsModel,
   ConcertOptionsRoomModel,
 } from '@app/domain/models/concert.model';
-import { Concert } from '@app/infrastructure/entities/concert.entity';
-import { ConcertOptions } from '@app/infrastructure/entities/concertOptions.entity';
-import { ConcertOptionsRoom } from '@app/infrastructure/entities/concertOptionsRoom.entity';
+import { Concert } from '@app/infrastructure/db/entities/concert.entity';
+import { ConcertOptions } from '@app/infrastructure/db/entities/concertOptions.entity';
+import { ConcertOptionsRoom } from '@app/infrastructure/db/entities/concertOptionsRoom.entity';
 
 export class ConcertMapper {
   static toDomain(concert: Concert, options: ConcertOptions[]): ConcertModel {

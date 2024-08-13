@@ -1,9 +1,9 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserInfoRepository } from '@app/domain/interfaces/userInfo.repsitory.interface';
 import { UserInfoModel } from '@app/domain/models/userInfo.model';
-import { UserInfo } from '@app/infrastructure/entities/userInfo.entity';
+import { UserInfo } from '@app/infrastructure/db/entities/userInfo.entity';
 import { Repository } from 'typeorm';
-import { UserMapper } from '@app/infrastructure/mappers/userInfo.mapper.e2m';
+import { UserMapper } from '@app/infrastructure/db/mappers/userInfo.mapper.e2m';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

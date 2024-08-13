@@ -2,7 +2,7 @@ import { UserWaitQueueModel } from '@app/domain/models/userWaitQueue.model';
 import {
   QueueState,
   UserWaitQueue,
-} from '@app/infrastructure/entities/userWaitQueue.entity';
+} from '@app/infrastructure/db/entities/userWaitQueue.entity';
 
 export class InfrastructureMapper {
   static toDomain(entity: UserWaitQueue): UserWaitQueueModel {

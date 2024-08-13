@@ -5,7 +5,7 @@ import {
 import {
   UserAmountHistory,
   UserAmountHistoryGubun,
-} from '@app/infrastructure/entities/userAmountHistory.entity';
+} from '@app/infrastructure/db/entities/userAmountHistory.entity';
 
 export class AmountHistoryMapper {
   static toDomain(entity: UserAmountHistory): AmountHistoryModel {

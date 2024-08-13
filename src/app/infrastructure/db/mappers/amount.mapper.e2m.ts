@@ -1,5 +1,5 @@
 import { AmountModel } from '@app/domain/models/amount.model';
-import { UserAmount } from '@app/infrastructure/entities/userAmount.entity';
+import { UserAmount } from '@app/infrastructure/db/entities/userAmount.entity';
 
 export class AmountMapper {
   static toDomain(entity: UserAmount): AmountModel {

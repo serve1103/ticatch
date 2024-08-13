@@ -7,14 +7,14 @@ import {
   ConcertOptionsModel,
   ConcertOptionsRoomModel,
 } from '@app/domain/models/concert.model';
-import { Concert } from '@app/infrastructure/entities/concert.entity';
-import { ConcertOptions } from '@app/infrastructure/entities/concertOptions.entity';
-import { ConcertOptionsRoom } from '@app/infrastructure/entities/concertOptionsRoom.entity';
+import { Concert } from '@app/infrastructure/db/entities/concert.entity';
+import { ConcertOptions } from '@app/infrastructure/db/entities/concertOptions.entity';
+import { ConcertOptionsRoom } from '@app/infrastructure/db/entities/concertOptionsRoom.entity';
 import {
   ConcertMapper,
   ConcertOptionsMapper,
   ConcertOptionsRoomMapper,
-} from '@app/infrastructure/mappers/concert.mapper.e2m';
+} from '@app/infrastructure/db/mappers/concert.mapper.e2m';
 
 @Injectable()
 export class ConcertRepositoryImpl implements ConcertRepository {
