@@ -42,6 +42,6 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092 # Kafka가 모든 인터페이스에서 포트 9092를 통해 청취하도록 설정
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092 # 외부에서 이 브로커에 접근할 수 있는 주소를 지정
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
