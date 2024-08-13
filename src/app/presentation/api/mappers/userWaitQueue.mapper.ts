@@ -2,8 +2,8 @@ import {
   QueueState,
   UserWaitQueueModel,
 } from '@app/domain/models/userWaitQueue.model';
-import { UserWaitQueueResponseDto } from '@app/presentation/dto/userWaitQueue.response.dto';
-import { CreateUserWaitQueueDto } from '@app/presentation/dto/userWaitQueue.request.dto';
+import { UserWaitQueueResponseDto } from '@app/presentation/api/dto/userWaitQueue.response.dto';
+import { CreateUserWaitQueueDto } from '@app/presentation/api/dto/userWaitQueue.request.dto';
 
 export class PresentationMapper {
   static toResponse(model: UserWaitQueueModel): UserWaitQueueResponseDto {

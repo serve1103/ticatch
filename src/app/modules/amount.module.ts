@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AmountController } from '@app/presentation/amount.controller';
+import { AmountController } from '@app/presentation/api/amount.controller';
 import { AmountService } from '@app/domain/services/amount.service';
 import { UserAmountUseCase } from '@app/application/amount.use-case';
 import { AmountRepositoryImpl } from '@app/infrastructure/repositories/amount.repository';

@@ -5,8 +5,8 @@ import {
   UpdateUserRequest,
   UserIdRequest,
   UserInfoRequestDto,
-} from '@app/presentation/dto/user.request.dto';
-import { UserResponseDto } from '@app/presentation/dto/user.response.dto';
+} from '@app/presentation/api/dto/user.request.dto';
+import { UserResponseDto } from '@app/presentation/api/dto/user.response.dto';
 
 @ApiTags('유저 관리')
 @Controller('userInfo')

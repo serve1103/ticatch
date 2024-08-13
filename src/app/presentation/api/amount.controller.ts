@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { SetUserAmountDto } from '@app/presentation/dto/amount.request.dto';
-import { UserAmountResponseDto } from '@app/presentation/dto/amount.response.dto';
+import { SetUserAmountDto } from '@app/presentation/api/dto/amount.request.dto';
+import { UserAmountResponseDto } from '@app/presentation/api/dto/amount.response.dto';
 import { UserAmountUseCase } from '@app/application/amount.use-case';
 
 @ApiTags('충전 관리')

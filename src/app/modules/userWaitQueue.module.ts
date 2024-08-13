@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { UserWaitQueueController } from '@app/presentation/userWaitQueue.controller';
+import { UserWaitQueueController } from '@app/presentation/api/userWaitQueue.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserWaitQueue } from '@app/infrastructure/entities/userWaitQueue.entity';
 import { RedisModule } from '@app/infrastructure/redis.module';

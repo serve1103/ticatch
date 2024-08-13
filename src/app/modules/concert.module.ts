@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConcertController } from '@app/presentation/concert.controller';
+import { ConcertController } from '@app/presentation/api/concert.controller';
 import { ConcertService } from '@app/domain/services/concert.service';
 import { ConcertUseCase } from '@app/application/concert.use-case';
 import { concertRepositorySymbol } from '@app/domain/interfaces/concert.repository.interface';
