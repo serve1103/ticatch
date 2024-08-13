@@ -3,9 +3,9 @@ import { UserInfoService } from '@app/domain/services/userInfo.service';
 import {
   UpdateUserRequest,
   UserIdRequest,
-} from '@app/presentation/dto/user.request.dto';
-import { UserResponseDto } from '@app/presentation/dto/user.response.dto';
-import { UserMapper } from '@app/presentation/mappers/user.mapper.d2m';
+} from '@app/presentation/api/dto/user.request.dto';
+import { UserResponseDto } from '@app/presentation/api/dto/user.response.dto';
+import { UserMapper } from '@app/presentation/api/mappers/user.mapper.d2m';
 import { UserInfoModel } from '@app/domain/models/userInfo.model';
 
 @Injectable()

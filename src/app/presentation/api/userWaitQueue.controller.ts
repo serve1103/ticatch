@@ -2,9 +2,9 @@ import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { ApiOperation, ApiTags, ApiResponse, ApiParam } from '@nestjs/swagger';
 
 import { UserWaitQueueUseCase } from '@app/application/userWaitQueue.use-case';
-import { CreateUserWaitQueueDto } from '@app/presentation/dto/userWaitQueue.request.dto';
-import { UserWaitQueueResponseDto } from '@app/presentation/dto/userWaitQueue.response.dto';
-import { PresentationMapper } from '@app/presentation/mappers/userWaitQueue.mapper';
+import { CreateUserWaitQueueDto } from '@app/presentation/api/dto/userWaitQueue.request.dto';
+import { UserWaitQueueResponseDto } from '@app/presentation/api/dto/userWaitQueue.response.dto';
+import { PresentationMapper } from '@app/presentation/api/mappers/userWaitQueue.mapper';
 
 @ApiTags('User Wait Queue')
 @Controller('userWaitQueue')

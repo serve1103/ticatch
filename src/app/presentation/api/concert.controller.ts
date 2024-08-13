@@ -5,7 +5,7 @@ import {
   AvailableSeatsResponseDto,
   ConcertDetailsDto,
   ConcertResponseDto,
-} from '@app/presentation/dto/concert.response';
+} from '@app/presentation/api/dto/concert.response';
 
 @ApiTags('콘서트 관리')
 @Controller('concerts')
