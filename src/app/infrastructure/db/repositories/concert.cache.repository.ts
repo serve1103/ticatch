@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConcertCacheRepository } from '@app/domain/interfaces/concert.cache.repository.interface';
-import { RedisSymbol } from '@app/infrastructure/redis.module';
+import { RedisSymbol } from '@app/modules/redis.module';
 import { Redis } from 'ioredis';
 import { ConcertModel } from '@app/domain/models/concert.model';
 

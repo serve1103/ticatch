@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { PaymentHandler } from '@app/event/payment.handler';
+import { PaymentHandler } from '@app/domain/event/payment.handler';
 
 @Module({
   imports: [CqrsModule],

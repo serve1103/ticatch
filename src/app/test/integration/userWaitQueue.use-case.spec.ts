@@ -3,8 +3,8 @@ import { UserWaitQueueUseCase } from '../../application/userWaitQueue.use-case';
 import { QueueState } from '../../domain/models/userWaitQueue.model';
 import { UserInfoService } from '../../domain/services/userInfo.service';
 import { UserWaitQueueService } from '../../domain/services/userWaitQueue.service';
-import { RedisModule } from '../../infrastructure/redis.module';
-import { RedisService } from '../../infrastructure/redis.client';
+import { RedisModule } from '../../modules/redis.module';
+import { RedisService } from '../../infrastructure/redis/redis.client';
 
 describe('UserWaitQueueUseCase (Integration)', () => {
   let useCase: UserWaitQueueUseCase;

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Redis } from 'ioredis';
-import { RedisSymbol } from '@app/infrastructure/redis.module';
+import { RedisSymbol } from '@app/modules/redis.module';
 import { UserWaitQueueModel } from '@app/domain/models/userWaitQueue.model';
 
 @Injectable()
