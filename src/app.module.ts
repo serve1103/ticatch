@@ -9,6 +9,7 @@ import { UserWaitQueueModule } from '@app/modules/userWaitQueue.module';
 import { DatabaseModule } from '@app/modules/database.module';
 import { EventModule } from '@app/modules/event.module';
 import { KafkaModule } from '@app/modules/kafka.module';
+import { ReservationModule } from '@app/modules/reservation.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { KafkaModule } from '@app/modules/kafka.module';
     PaymentModule,
     UserInfoModule,
     UserWaitQueueModule,
+    ReservationModule,
     DatabaseModule,
     EventModule,
     KafkaModule,
