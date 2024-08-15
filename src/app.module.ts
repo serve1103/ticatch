@@ -8,6 +8,7 @@ import { EventModule } from '@app/modules/event.module';
 import { PaymentModule } from '@app/modules/payment.module';
 import { UserInfoModule } from '@app/modules/userInfo.module';
 import { UserWaitQueueModule } from '@app/modules/userWaitQueue.module';
+import { ReservationModule } from '@app/modules/reservation.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UserWaitQueueModule } from '@app/modules/userWaitQueue.module';
     PaymentModule,
     UserInfoModule,
     UserWaitQueueModule,
+    ReservationModule,
     DatabaseModule,
     EventModule,
   ],
