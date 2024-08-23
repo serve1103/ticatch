@@ -14,6 +14,7 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
 
 <details>
   <summary><span style="font-size: 1.5em;">K6 부하테스트 장애 대응</span></summary>
+
 # 부하 테스트 결과 및 개선 계획
 
 ## 개요
