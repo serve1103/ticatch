@@ -13,6 +13,11 @@
 API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요합니다.
 
 <details>
+  <summary><span style="font-size: 1.5em;">K6 부하테스트 장애 대응</span></summary>
+
+</details>
+
+<details>
   <summary><span style="font-size: 1.5em;">시나리오 Query 분석 및 Index 설계</span></summary>
   
   ![ticatch_조회_데이터.png](src/asset/ticatch_조회_데이터.png)
@@ -81,15 +86,20 @@ API 요청에는 모든 엔드포인트에 대해 Bearer Token 인증이 필요�
 #### MSA 설계
 
 ##### 1. 기존 모듈들을 MSA로 설계한다면.
+
 - 유저 모듈
 - 대기열 모듈
 - 예약 모듈
 - 결제모듈
 - 콘서트 모듈
+
 ##### 2. 각 모듈 별 트랜잭션이 물려있는 부분을 확인
+
 - 결제 모듈 + 유저(금액) + 대기열
 - 콘서트(인원) + 예약
+
 ##### 3. CQRS Event 로 해당 트랜잭션에 Command 와 Handler 적용
+
 - 결제 관련 로직이 외부 API랑 통신한다고 가정
 - Event 관련 작업을 진행
 - 미비한 Payment 로직 추가 작업
